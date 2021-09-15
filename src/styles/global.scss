@@ -1,10 +1,12 @@
 @use './components';
 @use './abstracts' as abs;
+@use './variables' as var;
 
 body {
   margin: 0%;
   padding: 0%;
   box-sizing: border-box;
+  font-family: var.$global-font;
 }
 
 main {

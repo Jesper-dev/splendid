@@ -1,0 +1,27 @@
+@use './abstracts' as abs;
+@use './variables' as var;
+nav {
+  @include abs.flex-column;
+
+  position: absolute;
+  bottom: 0%;
+  width: 100%;
+  height: 50px;
+  background-color: var.$primary;
+  ul {
+    @include abs.flex-row;
+    justify-content: space-around;
+    padding: 0%;
+    list-style: none;
+    margin: 0%;
+    width: 100%;
+
+    li {
+      font-size: var.$nav-font-size;
+      a {
+        text-decoration: none;
+        color: black;
+      }
+    }
+  }
+}
