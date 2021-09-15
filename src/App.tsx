@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import Discover from "./pages/Discover";
 import CreateAdd from "./pages/CreateAdd";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import { Navbar } from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -14,9 +15,10 @@ function App() {
         <main>
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route exact path="/Discover" component={Discover} />
-            <Route exact path="/Add" component={CreateAdd} />
+            <Route exact path="/discover" component={Discover} />
+            <Route exact path="/add" component={CreateAdd} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
           </Switch>
         </main>
       </Router>

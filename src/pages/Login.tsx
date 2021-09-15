@@ -22,21 +22,21 @@ const Login = () => {
       <Form
         submitFunc={submit}
         values={{
-          firstInput: "Username",
-          secondInput: "Password",
+          username: "Username",
+          password: "Password",
           buttonText: "submit",
         }}
       >
         {(values) => (
           <>
-            <label>{values.firstInput}</label>
+            <label>{values.username}</label>
             <input
               type="text"
               id="username"
               value={state.userName}
               onChange={(e) => onInputChange(e)}
             />
-            <label>{values.secondInput}</label>
+            <label>{values.password}</label>
             <input
               type="password"
               id="password"
