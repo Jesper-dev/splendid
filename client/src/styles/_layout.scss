@@ -1,5 +1,14 @@
 @use './abstracts' as abs;
 @use './variables' as var;
+
+header {
+  @include abs.flex-row;
+  position: absolute;
+  background-color: var.$peach-primary;
+  color: white;
+  width: 100%;
+}
+
 nav {
   @include abs.flex-column;
 

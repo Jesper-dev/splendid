@@ -3,7 +3,13 @@
 $global-font: "Montserrat", sans-serif;
 $nav-font-size: 1.2rem;
 
+@mixin ag_body2 {
+  font-size: 16px;
+  line-height: 30px;
+}
+
 //BG-COLORS
 $primary: #0b9882;
 $primary-light: #f2f9f6;
 $primary-dark: #235347;
+$peach-primary: #f88472;

@@ -1,8 +1,38 @@
 @use './abstracts' as abs;
+@use './variables' as var;
 
 form {
   @include abs.flex-column;
   input {
     margin: 8px;
   }
+}
+
+.homepageTextContainer {
+  @include abs.flex-column;
+  justify-content: flex-start;
+  height: 50%;
+
+  h2 {
+    color: var.$primary-dark;
+  }
+
+  p {
+    @include var.ag_body2;
+    margin: 16px;
+    text-align: center;
+  }
+}
+
+.homepageBtn {
+  border: 0px solid black;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  outline: none;
+  background-color: var.$peach-primary;
+  color: white;
+  width: 75%;
+  height: 4%;
 }
