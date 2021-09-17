@@ -5,12 +5,14 @@ import CreateAdd from "./pages/CreateAdd";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { Navbar } from "./components/Navbar";
+import { Header } from "./components/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
       <Router>
+        <Header />
         <Navbar />
         <main>
           <Switch>
