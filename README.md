@@ -2,11 +2,16 @@
 
 ## Techs
 
-**CLIENT/FRONTEND**
+CLIENT/FRONTEND
+
 - React
+
 - TypeScript
+
 - SASS
 
-**SERVER/BACKEND**
+SERVER/BACKEND
+
 - MongoDB
+
 - Express
