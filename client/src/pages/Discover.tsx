@@ -6,8 +6,8 @@ const Discover = () => {
     <>
       <section className="categoriesContainer">
         <h3>Kategorier</h3>
-        {categoryTexts.map((item) => {
-          return <CategoryCard text={item} />;
+        {categoryTexts.map((item, i) => {
+          return <CategoryCard key={i} text={item} />;
         })}
       </section>
     </>

@@ -2,8 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const cors = require("cors");
-
 const users = require("./routes/api/users");
+const ads = require("./routes/api/ads");
 
 const app = express();
 
@@ -31,6 +31,7 @@ require("./config/passport")(passport);
 
 //Routes
 app.use("/api/users", users);
+app.use("/api/ads", ads);
 
 app.get("/", (req, res) => res.send({ Working: "true" }));
 
@@ -39,3 +40,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`Server is up and running on port: ${PORT}`)
 );
+
+//heroku restart -a
