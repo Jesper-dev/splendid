@@ -27,7 +27,7 @@ const Login = () => {
   };
   const sendToDB = (obj: ReqBody) => {
     axios
-      .post("http://localhost:5000/api/users/login", obj)
+      .post("https://splendidsrv.herokuapp.com/api/users/login", obj)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   };

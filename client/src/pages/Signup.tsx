@@ -72,7 +72,10 @@ const Signup = () => {
   };
 
   const sendToDB = (obj: ReqBody) => {
-    axios.post("http://localhost:5000/api/users/register", obj);
+    axios
+      .post("https://splendidsrv.herokuapp.com/api/users/register", obj)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
 
   return (
