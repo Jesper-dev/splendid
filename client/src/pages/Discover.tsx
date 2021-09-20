@@ -1,7 +1,15 @@
+import { CategoryCard } from "../components/discover/CategoryCard";
+
 const Discover = () => {
+  const categoryTexts = ["Sport och Fritid", "Verktyg"];
   return (
     <>
-      <h1>Discover</h1>
+      <section className="categoriesContainer">
+        <h3>Kategorier</h3>
+        {categoryTexts.map((item) => {
+          return <CategoryCard text={item} />;
+        })}
+      </section>
     </>
   );
 };
