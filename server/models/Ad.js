@@ -10,6 +10,10 @@ const AdSchema = new Schema({
     type: [],
     required: true,
   },
+  pic: {
+    type: String,
+    required: true,
+  },
   desc: {
     type: String,
     required: true,

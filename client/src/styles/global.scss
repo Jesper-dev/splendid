@@ -7,10 +7,10 @@ body {
   padding: 0%;
   box-sizing: border-box;
   font-family: var.$global-font;
+  background-color: var.$primary-light;
 }
 
 main {
   @include abs.flex-column;
   height: 100vh;
-  background-color: var.$primary-light;
 }
