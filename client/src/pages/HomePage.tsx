@@ -1,4 +1,7 @@
+import { useHistory } from "react-router-dom";
+
 const HomePage = () => {
+  let history = useHistory();
   return (
     <>
       <div className="homepageTextContainer">
@@ -8,7 +11,9 @@ const HomePage = () => {
           är vad du vill hyra så sköter vi resten. Du kan även hyra ut.
         </p>
       </div>
-      <button className="homepageBtn">Börja leta</button>
+      <button className="homepageBtn" onClick={() => history.push("/discover")}>
+        Börja leta
+      </button>
     </>
   );
 };
