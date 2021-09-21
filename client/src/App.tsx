@@ -13,7 +13,8 @@ function App() {
     <>
       <Router>
         <Header />
-        <Navbar />
+        {window.location.pathname === "/add" ? null : <Navbar />}
+
         <main>
           <Switch>
             <Route exact path="/" component={HomePage} />
