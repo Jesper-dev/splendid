@@ -1,5 +1,5 @@
-@use './abstracts' as abs;
-@use './variables' as var;
+@use "./abstracts" as abs;
+@use "./variables" as var;
 
 form {
   @include abs.flex-column;
@@ -133,6 +133,7 @@ form {
   @include var.ag_body_bold;
   color: white;
   margin: 10% 0%;
+  align-self: center;
 }
 
 //ADD FORM
@@ -142,6 +143,7 @@ form {
   form {
     width: 100%;
     @include abs.flex-column;
+    align-items: flex-start;
 
     textarea {
       border: none;
@@ -160,7 +162,7 @@ form {
       margin: 3%;
     }
 
-    #inputDescTitle {
+    .inputDescTitle {
       margin-bottom: 5%;
     }
 
@@ -192,7 +194,22 @@ form {
           margin-left: 5%;
           width: 10%;
         }
+
+        .adressContainer {
+          @include abs.flex-row;
+          position: absolute;
+          width: 50%;
+          margin-top: 10%;
+          margin-left: 10%;
+          input {
+            border: 1px solid black;
+            height: 15px;
+            width: 40%;
+            margin: 0%;
+          }
+        }
       }
+
       p {
         @include var.body_small;
         width: 90%;

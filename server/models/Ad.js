@@ -2,15 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const AdSchema = new Schema({
-  title: {
+  category: {
     type: String,
     required: true,
   },
-  price: {
-    type: [],
-    required: true,
-  },
-  pic: {
+  title: {
     type: String,
     required: true,
   },
@@ -18,13 +14,46 @@ const AdSchema = new Schema({
     type: String,
     required: true,
   },
-  place: {
+  pickup: {
+    type: Boolean,
+    required: false,
+  },
+  adress: {
+    type: String,
+    required: false,
+  },
+  delivery: {
+    type: Boolean,
+    required: false,
+  },
+  price: [{ type: String, required: false }],
+  // price1: {
+  //   type: String,
+  //   required: false,
+  // },
+  // price2: {
+  //   type: String,
+  //   required: false,
+  // },
+  // price3: {
+  //   type: String,
+  //   required: false,
+  // },
+  terms: {
     type: String,
     required: true,
   },
-  name: {
+  value: {
     type: String,
     required: true,
+  },
+  pic: {
+    type: String,
+    required: false,
+  },
+  name: {
+    type: String,
+    required: false,
   },
   date: {
     type: Date,
