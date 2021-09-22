@@ -151,6 +151,7 @@ form {
       width: 99%;
       height: 60px;
       outline: none;
+      font-family: var.$ad-card-font;
 
       &::placeholder {
         font-family: var.$ad-card-font;
@@ -172,6 +173,7 @@ form {
       border: none;
       width: 99%;
       margin: 0%;
+      font-family: var.$ad-card-font;
 
       &::placeholder {
         font-family: var.$ad-card-font;
@@ -206,6 +208,7 @@ form {
             height: 15px;
             width: 40%;
             margin: 0%;
+            font-family: var.$ad-card-font;
           }
         }
       }

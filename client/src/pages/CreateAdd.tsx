@@ -12,7 +12,7 @@ interface DbObj {
   // price2: string;
   // price3: string;
   pickup: boolean;
-  addres?: string;
+  adress?: string;
   delivery: boolean;
   terms: string;
   value: string;
@@ -114,14 +114,13 @@ const CreateAdd = () => {
       title: state.title,
       desc: state.desc,
       pickup: state.pickup,
-      addres: state.adress,
+      adress: state.pickup ? state.adress : "",
       delivery: state.delivery,
       price: arr,
       terms: state.terms,
       value: state.value,
       date: Date.now(),
     };
-    console.log(newDbObj);
     sendToDb(newDbObj);
   };
   const sendToDb = (obj: DbObj) => {

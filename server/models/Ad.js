@@ -27,18 +27,6 @@ const AdSchema = new Schema({
     required: false,
   },
   price: [{ type: String, required: false }],
-  // price1: {
-  //   type: String,
-  //   required: false,
-  // },
-  // price2: {
-  //   type: String,
-  //   required: false,
-  // },
-  // price3: {
-  //   type: String,
-  //   required: false,
-  // },
   terms: {
     type: String,
     required: true,
