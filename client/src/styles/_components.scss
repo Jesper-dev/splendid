@@ -145,6 +145,17 @@ form {
     @include abs.flex-column;
     align-items: flex-start;
 
+    .chooseFileContainer {
+      @include abs.flex-column;
+      background-color: white;
+      width: 100%;
+      height: 60px;
+
+      .fileInput {
+        width: 50%;
+      }
+    }
+
     textarea {
       border: none;
       resize: none;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form } from "../components/Form";
-import axios from "axios";
+import { sendToDB } from "../api/sendToDB";
 
 const Signup = () => {
   const [state, setState] = useState<{
@@ -31,7 +31,7 @@ const Signup = () => {
     if (state.password !== state.confirmPassword)
       alert("Passwords do not match!");
     else {
-      const UserObj: ReqBody = {
+      const userObj: ReqBody = {
         name: state.name,
         username: state.userName,
         email: state.email,
@@ -39,7 +39,11 @@ const Signup = () => {
         password2: state.confirmPassword,
         date: Date.now(),
       };
-      sendToDB(UserObj);
+      sendToDB(
+        "https://splendidsrv.herokuapp.com/api/users/register",
+        "post",
+        userObj
+      );
       setState((prev) => ({
         ...prev,
         name: "",
@@ -69,13 +73,6 @@ const Signup = () => {
     } else if (e.target.id === "confirmPassword") {
       setState((prev) => ({ ...prev, confirmPassword: e.target.value }));
     }
-  };
-
-  const sendToDB = (obj: ReqBody) => {
-    axios
-      .post("https://splendidsrv.herokuapp.com/api/users/register", obj)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
   };
 
   return (

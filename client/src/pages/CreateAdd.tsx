@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Form } from "../components/Form";
 import { MainBtn } from "../components/MainBtn";
-import axios from "axios";
+import { sendToDB } from "../api/sendToDB";
 
 interface DbObj {
   category: string;
   title: string;
   desc: string;
+  // pic: any;
   price: string[];
   // price1: string;
   // price2: string;
@@ -33,6 +34,7 @@ const CreateAdd = () => {
     delivery: boolean;
     terms: string;
     value: string;
+    pics: any[];
   }>({
     category: "",
     title: "",
@@ -46,6 +48,7 @@ const CreateAdd = () => {
     delivery: false,
     terms: "",
     value: "",
+    pics: [],
   });
 
   const onChange = (
@@ -113,6 +116,7 @@ const CreateAdd = () => {
       category: state.category,
       title: state.title,
       desc: state.desc,
+      // pic: state.selectedFile,
       pickup: state.pickup,
       adress: state.pickup ? state.adress : "",
       delivery: state.delivery,
@@ -121,14 +125,21 @@ const CreateAdd = () => {
       value: state.value,
       date: Date.now(),
     };
-    sendToDb(newDbObj);
+    sendToDB("https://splendidsrv.herokuapp.com/api/ads/add", "post", newDbObj);
   };
-  const sendToDb = (obj: DbObj) => {
-    axios
-      .post("https://splendidsrv.herokuapp.com/api/ads/add", obj)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState((prev) => ({ ...prev, selectedFile: e.target.files![0] }));
   };
+
+  const onFileUpload = () => {
+    const formData = new FormData();
+
+    // formData.append("myFile", state.selectedFile, state.selectedFile.name);
+    // console.log(state.selectedFile);
+    console.log("on File Upload");
+  };
+
   return (
     <>
       <div className="addFormContainer">
@@ -173,7 +184,14 @@ const CreateAdd = () => {
               ></textarea>
 
               <label>{values.pic}</label>
-              <input type="text"></input>
+              <div className="chooseFileContainer">
+                <input
+                  className="fileInput"
+                  type="file"
+                  onChange={(e) => onFileChange(e)}
+                />
+                <span onClick={() => onFileUpload()}>Välj denna bild</span>
+              </div>
 
               <label>{values.price}</label>
               <input

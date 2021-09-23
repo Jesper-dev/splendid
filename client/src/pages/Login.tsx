@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form } from "../components/Form";
-import axios from "axios";
+import { sendToDB } from "../api/sendToDB";
 
 const Login = () => {
   const [state, setState] = useState<{ userName: string; password: string }>({
@@ -13,23 +13,21 @@ const Login = () => {
   }
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const UserObj: ReqBody = {
+    const userObj: ReqBody = {
       username: state.userName,
       password: state.password,
     };
-    sendToDB(UserObj);
+    sendToDB(
+      "https://splendidsrv.herokuapp.com/api/users/login",
+      "post",
+      userObj
+    );
     setState((prev) => ({ ...prev, userName: "", password: "" }));
   };
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.id === "username"
       ? setState((prev) => ({ ...prev, userName: e.target.value }))
       : setState((prev) => ({ ...prev, password: e.target.value }));
-  };
-  const sendToDB = (obj: ReqBody) => {
-    axios
-      .post("https://splendidsrv.herokuapp.com/api/users/login", obj)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
   };
   return (
     <>
