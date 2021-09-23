@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+//Schema, like a structure of our Ad in MongoDB
 const AdSchema = new Schema({
   category: {
     type: String,
@@ -13,6 +14,11 @@ const AdSchema = new Schema({
   desc: {
     type: String,
     required: true,
+  },
+  pic: {
+    data: Buffer,
+    type: String,
+    required: false,
   },
   pickup: {
     type: Boolean,

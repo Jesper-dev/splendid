@@ -11,10 +11,14 @@ router.post("/get", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
+  if (req.method === "OPTIONS") {
+    res.status(200);
+  }
   const newAd = new Ad({
     category: req.body.category,
     title: req.body.title,
     desc: req.body.desc,
+    pic: req.body.pic,
     pickup: req.body.pickup,
     adress: req.body.adress,
     delivery: req.body.delivery,

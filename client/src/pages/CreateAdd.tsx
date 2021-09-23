@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Form } from "../components/Form";
 import { MainBtn } from "../components/MainBtn";
-import { sendToDB } from "../api/sendToDB";
+import { dbFunc } from "../api/db";
 
 interface DbObj {
   category: string;
   title: string;
   desc: string;
-  // pic: any;
+  pic: any;
   price: string[];
   // price1: string;
   // price2: string;
@@ -34,7 +34,7 @@ const CreateAdd = () => {
     delivery: boolean;
     terms: string;
     value: string;
-    pics: any[];
+    pic: any;
   }>({
     category: "",
     title: "",
@@ -48,7 +48,7 @@ const CreateAdd = () => {
     delivery: false,
     terms: "",
     value: "",
-    pics: [],
+    pic: "",
   });
 
   const onChange = (
@@ -116,7 +116,7 @@ const CreateAdd = () => {
       category: state.category,
       title: state.title,
       desc: state.desc,
-      // pic: state.selectedFile,
+      pic: state.pic,
       pickup: state.pickup,
       adress: state.pickup ? state.adress : "",
       delivery: state.delivery,
@@ -125,11 +125,23 @@ const CreateAdd = () => {
       value: state.value,
       date: Date.now(),
     };
-    sendToDB("https://splendidsrv.herokuapp.com/api/ads/add", "post", newDbObj);
+    dbFunc("https://splendidsrv.herokuapp.com/api/ads/add", "post", newDbObj);
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState((prev) => ({ ...prev, selectedFile: e.target.files![0] }));
+    const file = e.target.files![0];
+    const reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      () => {
+        setState((prev) => ({ ...prev, pic: reader.result }));
+      },
+      false
+    );
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
   const onFileUpload = () => {
@@ -137,7 +149,7 @@ const CreateAdd = () => {
 
     // formData.append("myFile", state.selectedFile, state.selectedFile.name);
     // console.log(state.selectedFile);
-    console.log("on File Upload");
+    console.log(state.pic);
   };
 
   return (
@@ -188,6 +200,7 @@ const CreateAdd = () => {
                 <input
                   className="fileInput"
                   type="file"
+                  accept="image/*"
                   onChange={(e) => onFileChange(e)}
                 />
                 <span onClick={() => onFileUpload()}>Välj denna bild</span>

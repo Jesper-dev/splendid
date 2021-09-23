@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CategoryCard } from "../components/discover/CategoryCard";
 import { AdCard } from "../components/discover/AdCard";
+import { dbFunc } from "../api/db";
 import axios from "axios";
 
 interface DbObject {
@@ -12,6 +13,7 @@ interface DbObject {
   name: string;
   date: string;
   category: string;
+  pic: string;
 }
 
 const Discover = () => {
@@ -26,12 +28,14 @@ const Discover = () => {
         name: "",
         date: "",
         category: "",
+        pic: "",
       },
     ],
   });
   const categoryTexts = ["Sport och Fritid", "Verktyg"];
   useEffect(() => {
     fetchDB();
+    console.log(state.dbObj);
   }, []);
   const fetchDB = () => {
     axios
@@ -55,6 +59,7 @@ const Discover = () => {
               title={item.title}
               price={item.price[0]}
               place={item.place}
+              pic={item.pic ? item.pic : ""}
             />
           );
         })}

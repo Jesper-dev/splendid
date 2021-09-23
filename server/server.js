@@ -10,6 +10,8 @@ const app = express();
 //DB Config
 const db = require("./config/keys").mongoURI;
 
+const whitelist = ["http://0.0.0.0:3000"];
+
 //Connect
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -32,6 +34,8 @@ require("./config/passport")(passport);
 //Routes
 app.use("/api/users", users);
 app.use("/api/ads", ads);
+app.options("/api/ads/add", cors());
+app.post("/api/ads/add", cors());
 
 app.get("/", (req, res) => res.send({ Working: "true" }));
 

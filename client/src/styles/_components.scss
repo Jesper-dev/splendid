@@ -46,7 +46,7 @@ form {
   // border: 1px solid black;
   width: 100%;
   height: 30%;
-  margin-top: 40%;
+  margin-top: 150%;
   margin-bottom: 20%;
 
   h3 {
@@ -86,7 +86,7 @@ form {
 
   .adCardContainer {
     width: 90%;
-    height: 100%;
+    height: 45%;
     padding: 8px;
     // border: 1px solid black;
     background-color: white;
@@ -108,6 +108,11 @@ form {
 
     .picContainer {
       height: 60%;
+
+      img {
+        height: 150px;
+        width: 150px;
+      }
     }
 
     button {

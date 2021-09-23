@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form } from "../components/Form";
-import { sendToDB } from "../api/sendToDB";
+import { dbFunc } from "../api/db";
 
 const Signup = () => {
   const [state, setState] = useState<{
@@ -39,7 +39,7 @@ const Signup = () => {
         password2: state.confirmPassword,
         date: Date.now(),
       };
-      sendToDB(
+      dbFunc(
         "https://splendidsrv.herokuapp.com/api/users/register",
         "post",
         userObj
