@@ -1,15 +1,18 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { usePathname } from "../hooks/urlHook";
 
 export const Navbar = () => {
   const isTrue = useRef(false);
+  const path = usePathname();
 
   useEffect(() => {
-    console.log();
-    if (window.location.pathname === "/add") {
+    if (path === "/add") {
+      isTrue.current = false;
+    } else {
       isTrue.current = true;
     }
-  }, [window.location.pathname]);
+  }, [path]);
 
   return (
     <>
