@@ -1,22 +1,32 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { usePathname } from "../hooks/urlHook";
 
 export const Navbar = () => {
-  const isTrue = useRef(false);
+  const [isTrue, setIsTrue] = useState(false);
   const path = usePathname();
 
   useEffect(() => {
-    if (path === "/add") {
-      isTrue.current = false;
-    } else {
-      isTrue.current = true;
+    //Hide or shows the navbar
+    switch (path) {
+      case "/add":
+        setIsTrue(true);
+        break;
+      case "/login":
+        setIsTrue(true);
+        break;
+      case "/signup":
+        setIsTrue(true);
+        break;
+      default:
+        setIsTrue(false);
+        break;
     }
   }, [path]);
 
   return (
     <>
-      {isTrue.current ? null : (
+      {isTrue ? null : (
         <nav>
           <ul>
             <li>

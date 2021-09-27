@@ -4,13 +4,14 @@ const passport = require("passport");
 const cors = require("cors");
 const users = require("./routes/api/users");
 const ads = require("./routes/api/ads");
+const grid = require("gridfs-stream");
 
 const app = express();
 
 //DB Config
 const db = require("./config/keys").mongoURI;
 
-const whitelist = ["http://0.0.0.0:3000"];
+module.exports = gfs = grid(db, mongoose.mongo);
 
 //Connect
 mongoose

@@ -7,7 +7,7 @@ interface DbObj {
   category: string;
   title: string;
   desc: string;
-  pic: any;
+  pic: string;
   price: string[];
   // price1: string;
   // price2: string;
@@ -140,15 +140,12 @@ const CreateAdd = () => {
       false
     );
     if (file) {
-      reader.readAsDataURL(file);
+      reader.readAsBinaryString(file);
     }
   };
 
   const onFileUpload = () => {
-    const formData = new FormData();
-
     // formData.append("myFile", state.selectedFile, state.selectedFile.name);
-    // console.log(state.selectedFile);
     console.log(state.pic);
   };
 
