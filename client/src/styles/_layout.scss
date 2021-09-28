@@ -1,9 +1,10 @@
-@use './abstracts' as abs;
-@use './variables' as var;
+@use "./abstracts" as abs;
+@use "./variables" as var;
 
 header {
   @include abs.flex-row;
   position: absolute;
+  top: 0%;
   background-color: var.$peach-primary;
   color: white;
   width: 100%;

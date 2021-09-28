@@ -54,6 +54,7 @@ const Discover = () => {
         })}
       </section>
       <section className="recomendedContainer">
+        <h3>Rekommenderade produkter</h3>
         {state.dbObj.map((item, i) => {
           return (
             <AdCard

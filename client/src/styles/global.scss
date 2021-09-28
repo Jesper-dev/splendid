@@ -1,6 +1,6 @@
-@use './components';
-@use './abstracts' as abs;
-@use './variables' as var;
+@use "./components";
+@use "./abstracts" as abs;
+@use "./variables" as var;
 
 body {
   margin: 0%;
@@ -11,6 +11,5 @@ body {
 }
 
 main {
-  @include abs.flex-column;
   height: 100vh;
 }
