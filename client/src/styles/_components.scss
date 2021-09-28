@@ -40,6 +40,11 @@ form {
   width: 75%;
   height: 6%;
 }
+//Login and Signup
+.loginAndSignupContainer {
+  height: 100vh;
+  @include abs.flex-column;
+}
 
 //DISCOVER
 .categoriesContainer {
@@ -159,6 +164,10 @@ form {
 .addFormContainer {
   margin-top: 100px;
   width: 100%;
+  i {
+    font-size: 1.5rem;
+    margin-left: 5%;
+  }
   form {
     width: 100%;
     @include abs.flex-column;

@@ -9,12 +9,9 @@ const CategoryPage = () => {
     console.log(slug);
   }, [slug]);
 
-  const pushBack = () => {
-    history.goBack();
-  };
   return (
     <section className="categoryPageContainer">
-      <i className="fas fa-chevron-left" onClick={() => pushBack()}></i>
+      <i className="fas fa-chevron-left" onClick={() => history.goBack()}></i>
       <h1>{slug}</h1>
     </section>
   );

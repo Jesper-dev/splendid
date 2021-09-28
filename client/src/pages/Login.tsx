@@ -30,7 +30,7 @@ const Login = () => {
       : setState((prev) => ({ ...prev, password: e.target.value }));
   };
   return (
-    <>
+    <section className="loginAndSignupContainer">
       <Form
         submitFunc={submit}
         values={{
@@ -59,7 +59,7 @@ const Login = () => {
           </>
         )}
       </Form>
-    </>
+    </section>
   );
 };
 

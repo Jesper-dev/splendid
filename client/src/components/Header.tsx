@@ -5,8 +5,6 @@ export const Header = () => {
   const [title, setTitle] = useState("");
   const path = usePathname();
 
-  console.log("Path in header: ", path);
-
   const makeTitle = () => {
     const newTitle = path.slice(10);
     setTitle(newTitle);

@@ -76,8 +76,7 @@ const Signup = () => {
   };
 
   return (
-    <>
-      <h1>Signup</h1>
+    <section className="loginAndSignupContainer">
       <Form
         submitFunc={submit}
         values={{
@@ -130,7 +129,7 @@ const Signup = () => {
           </>
         )}
       </Form>
-    </>
+    </section>
   );
 };
 
