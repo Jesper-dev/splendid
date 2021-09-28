@@ -16,21 +16,24 @@ interface DbObject {
 }
 
 const Discover = () => {
-  const [state, setState] = useState<{ dbObj: Array<DbObject> }>({
-    dbObj: [
-      {
-        _id: "",
-        title: "",
-        price: [""],
-        desc: "",
-        place: "",
-        name: "",
-        date: "",
-        category: "",
-        pic: "",
-      },
-    ],
-  });
+  const [state, setState] = useState<{ dbObj: Array<DbObject>; done: boolean }>(
+    {
+      dbObj: [
+        {
+          _id: "",
+          title: "",
+          price: [""],
+          desc: "",
+          place: "",
+          name: "",
+          date: "",
+          category: "",
+          pic: "",
+        },
+      ],
+      done: false,
+    }
+  );
   const categoryTexts = ["Sport och Fritid", "Verktyg"];
   useEffect(() => {
     fetchDB();
@@ -41,7 +44,9 @@ const Discover = () => {
     //https://splendidsrv.herokuapp.com/api/ads/get
     axios
       .post("https://splendidsrv.herokuapp.com/api/ads/get")
-      .then((res) => setState((prev) => ({ ...prev, dbObj: res.data })))
+      .then((res) =>
+        setState((prev) => ({ ...prev, dbObj: res.data, done: true }))
+      )
       .catch((err) => console.log(err));
   };
   return (
@@ -54,17 +59,21 @@ const Discover = () => {
       </section>
       <section className="recomendedContainer">
         <h3>Rekommenderade produkter</h3>
-        {state.dbObj.map((item, i) => {
-          return (
-            <AdCard
-              key={i}
-              title={item.title}
-              price={item.price[0]}
-              place={item.place}
-              pic={item.pic ? item.pic : ""}
-            />
-          );
-        })}
+        {state.done ? (
+          state.dbObj.map((item, i) => {
+            return (
+              <AdCard
+                key={i}
+                title={item.title}
+                price={item.price[0]}
+                place={item.place}
+                pic={item.pic ? item.pic : ""}
+              />
+            );
+          })
+        ) : (
+          <p>Loading...</p>
+        )}
       </section>
     </>
   );

@@ -18,10 +18,7 @@ interface DbObj {
   date: number;
 }
 
-//CONNECTION REFUSED, latest error
-
 const CreateAdd = () => {
-  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const history = useHistory();
   const [state, setState] = useState<{
     category: string;
