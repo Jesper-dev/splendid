@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 // import { Form } from "../components/Form";
 import { MainBtn } from "../components/MainBtn";
 import { dbFunc } from "../api/db";
-import Dropzone from "dropzone";
 
 interface DbObj {
   category: string;

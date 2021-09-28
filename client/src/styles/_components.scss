@@ -55,6 +55,10 @@ form {
     font-weight: bold;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   .categoryCardContainer {
     @include abs.flex-row;
     justify-content: space-between;
@@ -70,6 +74,7 @@ form {
       margin: 0%;
       margin-left: 5px;
       font-weight: bold;
+      text-decoration: none;
     }
 
     i {
@@ -244,5 +249,17 @@ form {
         padding: 8px;
       }
     }
+  }
+}
+
+//CategoryPage
+.categoryPageContainer {
+  @include abs.flex-column;
+  margin-top: 110px;
+
+  i {
+    align-self: flex-start;
+    font-size: 1.5rem;
+    margin-left: 5%;
   }
 }

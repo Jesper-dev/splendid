@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { CategoryCard } from "../components/discover/CategoryCard";
 import { AdCard } from "../components/discover/AdCard";
-import { dbFunc } from "../api/db";
 import axios from "axios";
 
 interface DbObject {
