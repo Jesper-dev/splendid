@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const db = require("../server");
 
 //Schema, like a structure of our Ad in MongoDB
 const AdSchema = new Schema({

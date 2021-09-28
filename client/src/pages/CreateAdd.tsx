@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { Form } from "../components/Form";
+import { useState, useRef } from "react";
+// import { Form } from "../components/Form";
 import { MainBtn } from "../components/MainBtn";
 import { dbFunc } from "../api/db";
+import Dropzone from "dropzone";
 
 interface DbObj {
   category: string;
@@ -20,7 +21,10 @@ interface DbObj {
   date: number;
 }
 
+//CONNECTION REFUSED, latest error
+
 const CreateAdd = () => {
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const [state, setState] = useState<{
     category: string;
     title: string;
@@ -35,6 +39,7 @@ const CreateAdd = () => {
     terms: string;
     value: string;
     pic: any;
+    picComp: [string, string, string, string, string];
   }>({
     category: "",
     title: "",
@@ -49,6 +54,7 @@ const CreateAdd = () => {
     terms: "",
     value: "",
     pic: "",
+    picComp: ["", "", "", "", ""],
   });
 
   const onChange = (
@@ -125,13 +131,16 @@ const CreateAdd = () => {
       value: state.value,
       date: Date.now(),
     };
+    //https://splendidsrv.herokuapp.com/api/ads/add
+    //http://localhost:5000/api/ads/add
     dbFunc("https://splendidsrv.herokuapp.com/api/ads/add", "post", newDbObj);
+    console.log("Submited");
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     const reader = new FileReader();
-
+    setState((prev) => ({ ...prev, pic: file }));
     reader.addEventListener(
       "load",
       () => {
@@ -140,154 +149,150 @@ const CreateAdd = () => {
       false
     );
     if (file) {
-      reader.readAsBinaryString(file);
+      reader.readAsDataURL(file);
     }
   };
 
   const onFileUpload = () => {
-    // formData.append("myFile", state.selectedFile, state.selectedFile.name);
-    console.log(state.pic);
+    alert("File Uploaded");
+  };
+
+  const values = {
+    category: "1. Kategori",
+    desc: "2. Beskriv varan",
+    pic: "3. Bilder",
+    price: "4. Pris",
+    options: "5. Alternativ för upphämtning",
+    terms: "6. Villkor",
+    value: "7. Värde",
   };
 
   return (
     <>
       <div className="addFormContainer">
-        <Form
-          submitFunc={submit}
-          values={{
-            category: "1. Kategori",
-            desc: "2. Beskriv varan",
-            pic: "3. Bilder",
-            price: "4. Pris",
-            options: "5. Alternativ för upphämtning",
-            terms: "6. Villkor",
-            value: "7. Värde",
-          }}
-        >
-          {(values) => (
-            <>
-              <label>{values.category}</label>
-              <input
-                placeholder="Kategori"
-                type="text"
-                id="category"
-                value={state.category}
-                onChange={(e) => onChange(e)}
-              ></input>
+        <form ref={formRef} onSubmit={submit}>
+          <>
+            <label>{values.category}</label>
+            <input
+              placeholder="Kategori"
+              type="text"
+              id="category"
+              value={state.category}
+              onChange={(e) => onChange(e)}
+            ></input>
 
-              <label>{values.desc}</label>
+            <label>{values.desc}</label>
+            <input
+              placeholder="Rubrik"
+              type="text"
+              className="inputDescTitle"
+              id="title"
+              value={state.title}
+              onChange={(e) => onChange(e)}
+            />
+            <textarea
+              placeholder="Beskrivning"
+              name=""
+              id="desc"
+              value={state.desc}
+              onChange={(e) => onChange(e)}
+            ></textarea>
+
+            <label>{values.pic}</label>
+            <div className="chooseFileContainer">
               <input
-                placeholder="Rubrik"
-                type="text"
-                className="inputDescTitle"
-                id="title"
-                value={state.title}
-                onChange={(e) => onChange(e)}
+                className="fileInput"
+                type="file"
+                accept="image/*"
+                onChange={(e) => onFileChange(e)}
               />
-              <textarea
-                placeholder="Beskrivning"
-                name=""
-                id="desc"
-                value={state.desc}
-                onChange={(e) => onChange(e)}
-              ></textarea>
+              <span onClick={() => onFileUpload()}>Välj denna bild</span>
+            </div>
 
-              <label>{values.pic}</label>
-              <div className="chooseFileContainer">
+            <label>{values.price}</label>
+            <input
+              placeholder="Pris för en dag"
+              type="text"
+              id="price1"
+              value={state.price1}
+              onChange={(e) => onChange(e)}
+            />
+            <input
+              placeholder="Pris för 3 dagar"
+              type="text"
+              id="price2"
+              value={state.price2}
+              onChange={(e) => onChange(e)}
+            />
+            <input
+              placeholder="Pris för en vecka"
+              type="text"
+              id="price3"
+              value={state.price3}
+              onChange={(e) => onChange(e)}
+            />
+
+            <label>{values.options}</label>
+            <div className="optionsContainer">
+              <div>
                 <input
-                  className="fileInput"
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => onFileChange(e)}
-                />
-                <span onClick={() => onFileUpload()}>Välj denna bild</span>
+                  type="checkbox"
+                  id="pickup"
+                  checked={state.pickup}
+                  onChange={(e) => onChange(e)}
+                ></input>
+                <span>Upphämtning</span>
+                {state.pickup ? (
+                  <div className="adressContainer">
+                    {" "}
+                    <label> Adress: </label>{" "}
+                    <input
+                      type="text"
+                      id="adress"
+                      value={state.adress}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </div>
+                ) : null}
               </div>
-
-              <label>{values.price}</label>
-              <input
-                placeholder="Pris för en dag"
-                type="text"
-                id="price1"
-                value={state.price1}
-                onChange={(e) => onChange(e)}
-              />
-              <input
-                placeholder="Pris för 3 dagar"
-                type="text"
-                id="price2"
-                value={state.price2}
-                onChange={(e) => onChange(e)}
-              />
-              <input
-                placeholder="Pris för en vecka"
-                type="text"
-                id="price3"
-                value={state.price3}
-                onChange={(e) => onChange(e)}
-              />
-
-              <label>{values.options}</label>
-              <div className="optionsContainer">
-                <div>
-                  <input
-                    type="checkbox"
-                    id="pickup"
-                    checked={state.pickup}
-                    onChange={(e) => onChange(e)}
-                  ></input>
-                  <span>Upphämtning</span>
-                  {state.pickup ? (
-                    <div className="adressContainer">
-                      {" "}
-                      <label> Adress: </label>{" "}
-                      <input
-                        type="text"
-                        id="adress"
-                        value={state.adress}
-                        onChange={(e) => onChange(e)}
-                      />
-                    </div>
-                  ) : null}
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="delivery"
-                    checked={state.delivery}
-                    onChange={(e) => onChange(e)}
-                  ></input>
-                  <span>Leverans</span>
-                </div>
-                <p>
-                  Splendid erbjuder användare ett miljövänligt
-                  leveransalternativ för att göra lånadet mer tillgänligt för de
-                  som saknar möjligheter för upphämtning. Se hur vi arbetar
-                  genom att följa länken.
-                </p>
+              <div>
+                <input
+                  type="checkbox"
+                  id="delivery"
+                  checked={state.delivery}
+                  onChange={(e) => onChange(e)}
+                ></input>
+                <span>Leverans</span>
               </div>
+              <p>
+                Splendid erbjuder användare ett miljövänligt leveransalternativ
+                för att göra lånadet mer tillgänligt för de som saknar
+                möjligheter för upphämtning. Se hur vi arbetar genom att följa
+                länken.
+              </p>
+            </div>
 
-              <label>{values.terms}</label>
-              <input
-                placeholder="Villkor"
-                type="text"
-                id="terms"
-                value={state.terms}
-                onChange={(e) => onChange(e)}
-              />
+            <label>{values.terms}</label>
+            <input
+              placeholder="Villkor"
+              type="text"
+              id="terms"
+              value={state.terms}
+              onChange={(e) => onChange(e)}
+            />
 
-              <label>{values.value}</label>
-              <input
-                placeholder="Värde"
-                type="text"
-                id="value"
-                value={state.value}
-                onChange={(e) => onChange(e)}
-              />
+            <label>{values.value}</label>
+            <input
+              placeholder="Värde"
+              type="text"
+              id="value"
+              value={state.value}
+              onChange={(e) => onChange(e)}
+            />
 
-              <MainBtn text={"publicera annons"} />
-            </>
-          )}
-        </Form>
+            <MainBtn text={"publicera annons"} />
+          </>
+        </form>
       </div>
     </>
   );

@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
-const gfs = require("../../server");
 //LOAD ADS MODEL
 const Ad = require("../../models/Ad");
 
@@ -17,24 +15,11 @@ router.post("/add", (req, res) => {
     res.status(200);
   }
 
-  const file = req.body.pic;
-  const tempfile = req.file.filename;
-  const writeStream = gfs.createWriteStream({ filename: file });
-
-  fs.createReadStream(tempfile)
-    .on("end", function () {
-      res.send("OK");
-    })
-    .on("error", function () {
-      res.send("ERR");
-    })
-    .pipe(writeStream);
-
   const newAd = new Ad({
     category: req.body.category,
     title: req.body.title,
     desc: req.body.desc,
-    pic: writeStream,
+    pic: req.body.pic,
     pickup: req.body.pickup,
     adress: req.body.adress,
     delivery: req.body.delivery,

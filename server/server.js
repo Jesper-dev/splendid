@@ -1,26 +1,44 @@
 const express = require("express");
+const mongoDB = require("mongodb");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const cors = require("cors");
 const users = require("./routes/api/users");
 const ads = require("./routes/api/ads");
-const grid = require("gridfs-stream");
+const assert = require("assert");
+const fs = require("fs");
+const busboy = require("connect-busboy");
 
 const app = express();
 
 //DB Config
-const db = require("./config/keys").mongoURI;
+const dbUri = require("./config/keys").mongoURI;
+const db = require("./db");
+db.connect(dbUri);
 
-module.exports = gfs = grid(db, mongoose.mongo);
-
-//Connect
-mongoose
-  .connect(db, { useNewUrlParser: true })
-  .then(() => console.log("MongoDB connected successfully"))
-  .catch((err) => console.log(err));
+module.exports = client = new mongoDB.MongoClient(dbUri);
+// const db = client.db("Database");
+client.connect(function (error) {
+  assert.ifError(error);
+  const db = client.db("Database");
+  // const collection = db.collection("ads");
+  // const bucket = new mongoDB.GridFSBucket(db);
+  // fs.createReadStream("./jon.jpg")
+  //   .pipe(bucket.openUploadStream("jon.jpg"))
+  //   .on("error", function (error) {
+  //     assert.ifError(error);
+  //   })
+  //   .on("finish", function () {
+  //     console.log("done");
+  //     process.exit(0);
+  //   });
+  console.log("succesfully init and connected");
+});
 
 //CORS middleware
 app.use(cors());
+
+// app.use(busboy);
 
 //BodyParser Middleware (BodyParser is deprececated, use express instead, works the same way)
 app.use(express.urlencoded({ extended: true }));

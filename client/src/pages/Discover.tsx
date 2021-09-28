@@ -38,6 +38,8 @@ const Discover = () => {
     console.log(state.dbObj);
   }, []);
   const fetchDB = () => {
+    //http://localhost:5000/api/ads/get
+    //https://splendidsrv.herokuapp.com/api/ads/get
     axios
       .post("https://splendidsrv.herokuapp.com/api/ads/get")
       .then((res) => setState((prev) => ({ ...prev, dbObj: res.data })))
