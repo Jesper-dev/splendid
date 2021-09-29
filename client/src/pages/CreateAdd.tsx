@@ -36,7 +36,7 @@ const CreateAdd = () => {
     pic: any;
     picComp: [string, string, string, string, string];
   }>({
-    category: "",
+    category: "Sport och Fritid",
     title: "",
     desc: "",
     priceArray: [""],
@@ -56,6 +56,7 @@ const CreateAdd = () => {
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLSelectElement>
   ) => {
     switch (e.target.id) {
       case "category":
@@ -130,6 +131,9 @@ const CreateAdd = () => {
     //http://localhost:5000/api/ads/add
     dbFunc("https://splendidsrv.herokuapp.com/api/ads/add", "post", newDbObj);
     console.log("Submited");
+    setTimeout(() => {
+      history.push("/discover");
+    }, 2000);
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,14 +175,10 @@ const CreateAdd = () => {
           {(values) => (
             <>
               <label>{values.category}</label>
-              <input
-                placeholder="Kategori"
-                type="text"
-                id="category"
-                value={state.category}
-                onChange={(e) => onChange(e)}
-              ></input>
-
+              <select name="" id="category" onChange={(e) => onChange(e)}>
+                <option value="Sport och Fritid">Sport och Fritid</option>
+                <option value="Verktyg">Verktyg</option>
+              </select>
               <label>{values.desc}</label>
               <input
                 placeholder="Rubrik"

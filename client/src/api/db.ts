@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const dbFunc = (url: string, method: string, obj: Object): void => {
   if (method === "post") {
+    //
     axios
       .post(url, obj)
       .then((res) => console.log(res.data))
@@ -13,3 +14,9 @@ export const dbFunc = (url: string, method: string, obj: Object): void => {
       .catch((err) => console.log(err));
   }
 };
+
+/* {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }*/

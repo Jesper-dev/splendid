@@ -164,6 +164,16 @@ form {
 .addFormContainer {
   margin-top: 100px;
   width: 100%;
+
+  #category {
+    outline: none;
+    height: 40px;
+    border: none;
+    width: 99%;
+    margin: 0%;
+    font-family: var.$ad-card-font;
+  }
+
   i {
     font-size: 1.5rem;
     margin-left: 5%;
