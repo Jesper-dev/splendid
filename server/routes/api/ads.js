@@ -3,8 +3,15 @@ const router = express.Router();
 //LOAD ADS MODEL
 const Ad = require("../../models/Ad");
 
-router.post("/get", (req, res) => {
+router.post("/all", (req, res) => {
   Ad.find({}, function (err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
+router.post("/single", (req, res) => {
+  Ad.findById(req.body.id, function (err, result) {
     if (err) throw err;
     res.json(result);
   });

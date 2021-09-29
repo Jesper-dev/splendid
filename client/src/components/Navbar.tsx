@@ -7,6 +7,7 @@ export const Navbar = () => {
   const path = usePathname();
 
   useEffect(() => {
+    console.log(path);
     //Hide or shows the navbar
     switch (path) {
       case "/add":
@@ -18,9 +19,15 @@ export const Navbar = () => {
       case "/signup":
         setIsTrue(true);
         break;
+      case "/ad/":
+        setIsTrue(true);
+        break;
       default:
         setIsTrue(false);
         break;
+    }
+    if (path.includes("/ad")) {
+      setIsTrue(true);
     }
   }, [path]);
 

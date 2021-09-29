@@ -34,36 +34,41 @@ const Discover = () => {
       done: false,
     }
   );
-  const categoryTexts = ["Sport och Fritid", "Verktyg"];
+  const categoryTexts = ["Sport och Fritid", "Verktyg"]; //Texts for the two different categories.
   useEffect(() => {
     fetchDB();
-    console.log(state.dbObj);
   }, []);
   const fetchDB = () => {
     //http://localhost:5000/api/ads/get
     //https://splendidsrv.herokuapp.com/api/ads/get
+    //Fetching data from API
+    //Kan inte använda functionen i API mappen för denna behöver en setState!
     axios
-      .post("https://splendidsrv.herokuapp.com/api/ads/get")
+      .post("https://splendidsrv.herokuapp.com/api/ads/all")
       .then((res) =>
         setState((prev) => ({ ...prev, dbObj: res.data, done: true }))
       )
       .catch((err) => console.log(err));
   };
+
   return (
     <>
       <section className="categoriesContainer">
         <h3>Kategorier</h3>
+        {/* Mappar ut kategorierna från categoryTexts arrayen */}
         {categoryTexts.map((item, i) => {
           return <CategoryCard key={i} text={item} />;
         })}
       </section>
       <section className="recomendedContainer">
         <h3>Rekommenderade produkter</h3>
+        {/* Mappar ut alla ads/annonser från datan vi hämta från databasen när allt är klart, done = true */}
         {state.done ? (
           state.dbObj.map((item, i) => {
             return (
               <AdCard
                 key={i}
+                _id={item._id}
                 title={item.title}
                 price={item.price[0]}
                 place={item.place}

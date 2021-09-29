@@ -42,11 +42,12 @@ const CategoryPage = () => {
     fetchDB();
   }, [slug]);
 
+  //Hämtar data från databasen och filtrear den direkt så att man enbart får annonser men den kategorin som man klicka på
   const fetchDB = () => {
-    //http://localhost:5000/api/ads/get
-    //https://splendidsrv.herokuapp.com/api/ads/get
+    //http://localhost:5000/api/ads/all
+    //https://splendidsrv.herokuapp.com/api/ads/all
     axios
-      .post("https://splendidsrv.herokuapp.com/api/ads/get")
+      .post("https://splendidsrv.herokuapp.com/api/ads/all")
       .then((res) => {
         const newArr = res.data.filter(
           (item: DbObject) => item.category === slug
@@ -64,6 +65,7 @@ const CategoryPage = () => {
           return (
             <AdCard
               key={i}
+              _id={item._id}
               title={item.title}
               price={item.price[0]}
               place={item.place}

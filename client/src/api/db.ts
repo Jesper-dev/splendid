@@ -1,8 +1,8 @@
 import axios from "axios";
 
+//Function for fetching data from our api
 export const dbFunc = (url: string, method: string, obj: Object): void => {
   if (method === "post") {
-    //
     axios
       .post(url, obj)
       .then((res) => console.log(res.data))

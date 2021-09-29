@@ -12,7 +12,7 @@ form {
 .homepageContainer {
   @include abs.flex-column;
   justify-content: space-evenly;
-  height: 100%;
+  height: 80%;
 
   .textContainer {
     @include abs.flex-column;
@@ -37,8 +37,8 @@ form {
   outline: none;
   background-color: var.$peach-primary;
   color: white;
-  width: 75%;
-  height: 6%;
+  width: 275px;
+  height: 30px;
 }
 //Login and Signup
 .loginAndSignupContainer {
@@ -51,7 +51,7 @@ form {
   // border: 1px solid black;
   width: 100%;
   height: 30%;
-  margin-top: 150px;
+  margin-top: 50px;
   margin-bottom: 2%;
 
   h3 {
@@ -162,7 +162,7 @@ form {
 
 //ADD FORM
 .addFormContainer {
-  margin-top: 100px;
+  margin-top: 50px;
   width: 100%;
 
   #category {
@@ -325,5 +325,12 @@ form {
       text-decoration: underline;
       color: #f88472;
     }
+  }
+}
+
+//AD PAGE
+.adPageContainer {
+  img {
+    width: 100%;
   }
 }

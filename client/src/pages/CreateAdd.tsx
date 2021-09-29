@@ -4,6 +4,7 @@ import { Form } from "../components/Form";
 import { MainBtn } from "../components/MainBtn";
 import { dbFunc } from "../api/db";
 
+//Interface som beskvier bår req.body som vi skickar till databasen, (typescript only)
 interface DbObj {
   category: string;
   title: string;
@@ -52,6 +53,7 @@ const CreateAdd = () => {
     picComp: ["", "", "", "", ""],
   });
 
+  //Sätter värdet på alla states ovanför när vi skriver i formet
   const onChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -113,7 +115,7 @@ const CreateAdd = () => {
     e.preventDefault();
     let arr: string[] = [];
     arr.push(state.price1, state.price2, state.price3);
-
+    //Vårat objekt / req.body som vi skickar till API för att lägga till en annons i mongoDB / Databasen
     const newDbObj: DbObj = {
       category: state.category,
       title: state.title,
