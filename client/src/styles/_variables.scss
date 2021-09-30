@@ -5,6 +5,14 @@ $global-font: "Montserrat", sans-serif;
 $ad-card-font: "Poppins", sans-serif;
 $nav-font-size: 1.2rem;
 
+//COLORS
+$primary: #0b9882;
+$primary-light: #f2f9f6;
+$primary-dark: #235347;
+$peach-primary: #f88472;
+$text-color-green: #08947e;
+$txt-color: #444444;
+
 @mixin body_small {
   font-size: 12px;
   line-height: 22px;
@@ -21,11 +29,3 @@ $nav-font-size: 1.2rem;
   font-size: 16px;
   line-height: 30px;
 }
-
-//BG-COLORS
-$primary: #0b9882;
-$primary-light: #f2f9f6;
-$primary-dark: #235347;
-$peach-primary: #f88472;
-$text-color-green: #08947e;
-$txt-color: #444444;

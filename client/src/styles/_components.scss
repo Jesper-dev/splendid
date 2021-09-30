@@ -274,7 +274,7 @@ form {
 //CategoryPage
 .categoryPageContainer {
   @include abs.flex-column;
-  margin-top: 110px;
+  margin-top: 50px;
 
   i {
     align-self: flex-start;
@@ -330,7 +330,59 @@ form {
 
 //AD PAGE
 .adPageContainer {
+  @include abs.flex-column;
+  color: var.$txt-color;
+
   img {
     width: 100%;
+  }
+
+  .goBack {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    font-size: 1.5rem;
+  }
+
+  .contentContainer {
+    width: 90%;
+  }
+
+  .container1 {
+    margin: 0%;
+    width: 90%;
+    @include abs.flex-column;
+    align-items: flex-start;
+
+    p {
+      margin: 0%;
+    }
+  }
+
+  h4 {
+    margin: 0%;
+  }
+
+  .priceList {
+    margin: 0%;
+    padding: 0%;
+    list-style: none;
+
+    p {
+      font-style: italic;
+    }
+  }
+  a {
+    text-decoration: underline;
+    font-weight: bold;
+    color: var.$txt-color;
+  }
+}
+
+.rentalcondsContainer {
+  margin-top: 50px;
+  i {
+    margin-left: 5%;
+    font-size: 1.5rem;
   }
 }

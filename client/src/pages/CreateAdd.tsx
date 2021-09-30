@@ -290,7 +290,10 @@ const CreateAdd = () => {
                 onChange={(e) => onChange(e)}
               />
 
-              <MainBtn text={"publicera annons"} />
+              <MainBtn
+                text={"publicera annons"}
+                onClickFunc={() => console.log("Hej")}
+              />
             </>
           )}
         </Form>

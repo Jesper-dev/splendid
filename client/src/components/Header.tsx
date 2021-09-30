@@ -2,15 +2,19 @@ import { useEffect, useState } from "react";
 import { usePathname } from "../hooks/urlHook";
 
 export const Header = () => {
-  const [title, setTitle] = useState("");
+  const [state, setState] = useState<{ title: string; isTrue: boolean }>({
+    title: "",
+    isTrue: false,
+  });
   const path = usePathname();
 
   const makeTitle = () => {
     const newTitle = path.slice(10);
-    setTitle(newTitle);
+    setState((prev) => ({ ...prev, title: newTitle }));
   };
 
-  const checkPara = () => {
+  //Changes the headers title or hide / shows it
+  useEffect(() => {
     switch (path) {
       case "/category/Verktyg":
         makeTitle();
@@ -18,20 +22,33 @@ export const Header = () => {
       case "/category/Sport och Fritid":
         makeTitle();
         break;
+      case "/hyresvillkor":
+        let hyresvillkor = "Hyresvillkor";
+        setState((prev) => ({ ...prev, title: hyresvillkor }));
+        break;
+      case "/add":
+        let title = "lägg upp annons";
+        setState((prev) => ({ ...prev, title: title }));
+        break;
       default:
         const newTitle = "SPLENDID";
-        setTitle(newTitle);
+        setState((prev) => ({ ...prev, title: newTitle }));
         break;
     }
-  };
-
-  useEffect(() => {
-    checkPara();
+    if (path.includes("/ad")) {
+      setState((prev) => ({ ...prev, isTrue: true }));
+    } else {
+      setState((prev) => ({ ...prev, isTrue: false }));
+    }
   }, [path]);
 
   return (
-    <header>
-      <h1>{title}</h1>
-    </header>
+    <>
+      {state.isTrue ? null : (
+        <header>
+          <h1>{state.title}</h1>
+        </header>
+      )}
+    </>
   );
 };

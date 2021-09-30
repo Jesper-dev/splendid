@@ -6,6 +6,7 @@ export const Navbar = () => {
   const [isTrue, setIsTrue] = useState(false);
   const path = usePathname();
 
+  //Hide or shows the navbar
   useEffect(() => {
     console.log(path);
     //Hide or shows the navbar
@@ -19,9 +20,9 @@ export const Navbar = () => {
       case "/signup":
         setIsTrue(true);
         break;
-      case "/ad/":
-        setIsTrue(true);
-        break;
+      // case "/ad/":
+      //   setIsTrue(true);
+      //   break;
       default:
         setIsTrue(false);
         break;
