@@ -12,6 +12,7 @@ export interface AdState {
     category: string;
     pic: string;
     address?: string;
+    timeperiod?: string[];
   };
 }
 
@@ -27,6 +28,7 @@ const initialState: AdState = {
     category: "",
     pic: "",
     address: "",
+    timeperiod: [""],
   },
 };
 
