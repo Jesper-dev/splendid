@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { MainBtn } from "../components/MainBtn";
+import { RootState } from "../store";
+import { useSelector, useDispatch } from "react-redux";
+import { add } from "../redux/adSlice";
 
 interface DbObject {
   _id: string;
@@ -19,6 +22,8 @@ interface DbObject {
 }
 
 const AdPage = () => {
+  const ad = useSelector((state: RootState) => state.ad.AdObj);
+  const dispatch = useDispatch();
   const history = useHistory();
   const [state, setState] = useState<{ dbObj: DbObject; done: boolean }>({
     dbObj: {
@@ -47,6 +52,7 @@ const AdPage = () => {
       .post("https://splendidsrv.herokuapp.com/api/ads/single", { id: slug })
       .then((res) => {
         setState((prev) => ({ ...prev, dbObj: res.data, done: true }));
+        dispatch(add(res.data));
       })
       .catch((err) => console.log(err));
   };
