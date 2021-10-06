@@ -12,6 +12,8 @@ CLIENT/FRONTEND
 
 - SASS
 
+- Redux
+
 SERVER/BACKEND
 
 - MongoDB

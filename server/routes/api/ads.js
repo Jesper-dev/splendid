@@ -33,6 +33,7 @@ router.post("/add", (req, res) => {
     price: req.body.price,
     terms: req.body.terms,
     value: req.body.value,
+    timeperiod: req.body.timeperiod,
   });
 
   newAd

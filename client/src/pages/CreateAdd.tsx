@@ -17,6 +17,7 @@ interface DbObj {
   terms: string;
   value: string;
   date: number;
+  timeperiod: string;
 }
 
 const CreateAdd = () => {
@@ -35,7 +36,7 @@ const CreateAdd = () => {
     terms: string;
     value: string;
     pic: any;
-    picComp: [string, string, string, string, string];
+    timeperiod: string;
   }>({
     category: "Sport och Fritid",
     title: "",
@@ -50,7 +51,7 @@ const CreateAdd = () => {
     terms: "",
     value: "",
     pic: "",
-    picComp: ["", "", "", "", ""],
+    timeperiod: "",
   });
 
   //Sätter värdet på alla states ovanför när vi skriver i formet
@@ -127,6 +128,7 @@ const CreateAdd = () => {
       price: arr,
       terms: state.terms,
       value: state.value,
+      timeperiod: state.timeperiod,
       date: Date.now(),
     };
     //https://splendidsrv.herokuapp.com/api/ads/add

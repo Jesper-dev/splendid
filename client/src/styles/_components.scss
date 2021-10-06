@@ -341,6 +341,13 @@ form {
     height: 100vh;
     color: var.$primary;
 
+    a {
+      text-decoration: none;
+      outline: none;
+      @include abs.flex-column;
+      width: 80%;
+    }
+
     .calendarHeader {
       background-color: var.$primary-light;
       width: 100%;
@@ -412,5 +419,75 @@ form {
   i {
     margin-left: 5%;
     font-size: 1.5rem;
+  }
+}
+
+// Rent a add
+.rentAdContainer {
+  @include abs.flex-column;
+  color: var.$txt-color;
+
+  .card {
+    width: 100%;
+    box-shadow: 0px 4px 10px 0px grey;
+    .content {
+      width: 80%;
+      @include abs.flex-row;
+      justify-content: space-between;
+      img {
+        width: 140px;
+        height: 120px;
+      }
+      div {
+        height: 100%;
+        @include abs.flex-column;
+        h3 {
+          margin: 0%;
+          margin-bottom: 10%;
+        }
+      }
+    }
+  }
+
+  .time {
+    @include abs.flex-column;
+    font-weight: bold;
+  }
+
+  .formContainerRent {
+    width: 100%;
+    @include abs.flex-column;
+    form {
+      @include abs.flex-column;
+      align-items: flex-start;
+      margin-bottom: 60px;
+      width: 90%;
+
+      label {
+        color: var.$txt-color;
+        text-decoration: underline;
+        margin: 2%;
+      }
+
+      .rentFormItemContainer {
+        @include abs.flex-row;
+        justify-content: flex-start;
+        width: 100%;
+        margin-bottom: 2%;
+
+        input {
+          border: 1px solid grey;
+          width: 16px;
+          height: 16px;
+          margin: 0%;
+        }
+
+        span {
+          color: var.$txt-color;
+          @include var.ag_body_semibold;
+          margin-left: 5%;
+        }
+      }
+    }
   }
 }

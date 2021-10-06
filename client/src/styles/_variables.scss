@@ -25,6 +25,13 @@ $txt-color: #444444;
   font-family: "Poppins", sans-serif;
 }
 
+@mixin ag_body_semibold {
+  font-size: 16px;
+  line-height: 36px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+
 @mixin ag_body2 {
   font-size: 16px;
   line-height: 30px;

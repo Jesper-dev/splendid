@@ -21,10 +21,11 @@ interface DbObject {
   category: string;
   pic: string;
   address?: string;
+  timeperiod?: string;
 }
 
 const AdPage = () => {
-  // const ad = useSelector((state: RootState) => state.ad.AdObj);
+  const ad = useSelector((state: RootState) => state.ad.AdObj);
   const dispatch = useDispatch();
   const history = useHistory();
   const [value, onChange] = useState(new Date());
@@ -32,6 +33,8 @@ const AdPage = () => {
     dbObj: DbObject;
     done: boolean;
     showCalendar: boolean;
+    showInfo: boolean;
+    infoPrice: number;
   }>({
     dbObj: {
       _id: "",
@@ -47,6 +50,8 @@ const AdPage = () => {
     },
     done: false,
     showCalendar: false,
+    showInfo: false,
+    infoPrice: 0,
   });
   let slug = CheckSlug();
   useEffect(() => {
@@ -69,6 +74,18 @@ const AdPage = () => {
     console.log("hej");
   };
 
+  //Sätter vilken dag man valt i globala db objekt state (redux)
+  const onClickCalendar = () => {
+    const priceInt = parseInt(state.dbObj.price[0]);
+    state.dbObj = { ...state.dbObj, timeperiod: value.toDateString() };
+    dispatch(add(state.dbObj));
+    setState((prev) => ({ ...prev, showInfo: true, infoPrice: priceInt }));
+  };
+
+  const onSubmitCalendar = () => {
+    console.log("hej");
+  };
+
   return (
     <>
       <section className="adPageContainer">
@@ -85,9 +102,23 @@ const AdPage = () => {
                 <h1>välj hyresperiod</h1>
               </div>
             </div>
-
-            <Calendar onChange={onChange} value={value} />
-            <MainBtn text="Skicka förfrågan" onClickFunc={onClick} />
+            <Calendar
+              onChange={onChange}
+              value={value}
+              onClickDay={onClickCalendar}
+            />
+            {state.showInfo ? (
+              <div className="infoContainer">
+                <p>
+                  Låna <span>{value.toDateString().slice(0, 15)}</span>
+                </p>
+                <h1>Pris: {state.infoPrice + 50}</h1>
+                <span>Inklusive bokningsavgift</span>
+              </div>
+            ) : null}
+            <Link to="/rent">
+              <MainBtn text="Skicka förfrågan" onClickFunc={onSubmitCalendar} />{" "}
+            </Link>
           </div>
         ) : (
           <>
