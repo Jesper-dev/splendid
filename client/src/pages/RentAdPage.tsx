@@ -68,13 +68,30 @@ const RentAdPage = () => {
     }
   };
 
+  /** Används för att validera om man har tryckt i alla "required" fält */
+  const validation = () => {
+    if (state.pickup == false && state.delivery == false) {
+      return false;
+    } else if (state.swish == false && state.card == false) {
+      return false;
+    } else if (state.terms == false) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   /**
    * Om man klickat i att betala swish så tas man till /pay/swish sidan
    * Om man klickat i att betala med kort så tas man till /pay/card sidan
    */
   const onBtnClick = () => {
-    if (state.swish) history.push("/pay/swish");
-    else if (state.card) history.push("/pay/card");
+    if (!validation()) {
+      alert("Du har glömt något fält");
+    } else if (validation()) {
+      if (state.swish) history.push("/pay/swish");
+      else if (state.card) history.push("/pay/card");
+    }
   };
 
   return (

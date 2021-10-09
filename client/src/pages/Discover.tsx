@@ -16,24 +16,27 @@ interface DbObject {
 }
 
 const Discover = () => {
-  const [state, setState] = useState<{ dbObj: Array<DbObject>; done: boolean }>(
-    {
-      dbObj: [
-        {
-          _id: "",
-          title: "",
-          price: [""],
-          desc: "",
-          place: "",
-          name: "",
-          date: "",
-          category: "",
-          pic: "",
-        },
-      ],
-      done: false,
-    }
-  );
+  const [state, setState] = useState<{
+    dbObj: Array<DbObject>;
+    done: boolean;
+    searchTerm: string;
+  }>({
+    dbObj: [
+      {
+        _id: "",
+        title: "",
+        price: [""],
+        desc: "",
+        place: "",
+        name: "",
+        date: "",
+        category: "",
+        pic: "",
+      },
+    ],
+    done: false,
+    searchTerm: "",
+  });
   const categoryTexts = ["Sport och Fritid", "Verktyg"]; //Texts for the two different categories.
   useEffect(() => {
     fetchDB();
@@ -51,6 +54,24 @@ const Discover = () => {
       .catch((err) => console.log(err));
   };
 
+  /** Körs när vi klickar på sök knappen, för att få fram den ad man sökt på */
+  const onFilterAdsClick = () => {
+    const filteredArr = state.dbObj.filter((obj) =>
+      obj.title.toLocaleLowerCase().includes(state.searchTerm.toLowerCase())
+    );
+    console.log(state.dbObj);
+    setState((prev) => ({ ...prev, dbObj: filteredArr }));
+  };
+
+  /** Körs när vi skriver, används för att få tillbaka alla ads när sökrutan är tom */
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const text = e.target.value;
+    if (text === "") {
+      fetchDB();
+    }
+    setState((prev) => ({ ...prev, searchTerm: e.target.value }));
+  };
+
   return (
     <>
       <section className="categoriesContainer">
@@ -59,6 +80,14 @@ const Discover = () => {
         {categoryTexts.map((item, i) => {
           return <CategoryCard key={i} text={item} />;
         })}
+      </section>
+      <section className="searchbarContainer">
+        <input
+          type="text"
+          value={state.searchTerm}
+          onChange={(e) => onChangeSearch(e)}
+        />
+        <button onClick={() => onFilterAdsClick()}>sök</button>
       </section>
       <section className="recomendedContainer">
         <h3>Rekommenderade produkter</h3>

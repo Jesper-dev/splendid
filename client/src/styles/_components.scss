@@ -47,6 +47,26 @@ form {
 }
 
 //DISCOVER
+.searchbarContainer {
+  @include abs.flex-row;
+
+  input {
+    height: 25px;
+    outline: none;
+    border: 1px solid grey;
+    box-shadow: 0px 0px 10px 0px lightgray;
+    background-color: none;
+  }
+
+  button {
+    height: 29px;
+    width: 50px;
+    background: none;
+    outline: none;
+    border: 1px solid grey;
+  }
+}
+
 .categoriesContainer {
   // border: 1px solid black;
   width: 100%;
@@ -426,6 +446,10 @@ form {
 .rentAdContainer {
   @include abs.flex-column;
   color: var.$txt-color;
+
+  h1 {
+    text-align: center;
+  }
 
   .card {
     width: 100%;
