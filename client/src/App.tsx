@@ -4,6 +4,7 @@ import Discover from "./pages/Discover";
 import CategoryPage from "./pages/CategoryPage";
 import AdPage from "./pages/AdPage";
 import RentAdPage from "./pages/RentAdPage";
+import PayPage from "./pages/PayPage";
 import RentalConds from "./pages/RentalConds";
 import CreateAdd from "./pages/CreateAdd";
 import Login from "./pages/Login";
@@ -26,6 +27,7 @@ function App() {
             <Route exact path="/category/:slug" component={CategoryPage} />
             <Route exact path="/ad/:slug" component={AdPage} />
             <Route exact path="/rent" component={RentAdPage} />
+            <Route exact path="/pay/:slug" component={PayPage} />
             <Route exact path="/hyresvillkor" component={RentalConds} />
             <Route exact path="/add" component={CreateAdd} />
             <Route exact path="/login" component={Login} />

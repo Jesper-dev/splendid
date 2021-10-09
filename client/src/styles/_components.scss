@@ -487,7 +487,28 @@ form {
           @include var.ag_body_semibold;
           margin-left: 5%;
         }
+
+        a {
+          color: var.$txt-color;
+          @include var.ag_body_semibold;
+          margin-left: 5%;
+        }
       }
     }
+  }
+}
+
+.payContainer {
+  @include abs.flex-column;
+  justify-content: space-around;
+  height: 100vh;
+  .swishLogo {
+    width: 90%;
+    height: 50%;
+  }
+
+  .cardLogo {
+    width: 80%;
+    height: 40%;
   }
 }

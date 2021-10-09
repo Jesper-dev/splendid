@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { CheckSlug } from "../api/checkSlug";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { MainBtn } from "../components/MainBtn";
 import { RootState } from "../store";
@@ -67,11 +66,6 @@ const AdPage = () => {
         dispatch(add(res.data));
       })
       .catch((err) => console.log(err));
-  };
-
-  const onClick = () => {
-    setState((prev) => ({ ...prev, showCalendar: true }));
-    console.log("hej");
   };
 
   //Sätter vilken dag man valt i globala db objekt state (redux)
@@ -143,7 +137,12 @@ const AdPage = () => {
               </ul>
               <Link to="/hyresvillkor">Hyresvillkor</Link>
             </div>
-            <MainBtn text="Gör en förfrågan" onClickFunc={onClick} />
+            <MainBtn
+              text="Gör en förfrågan"
+              onClickFunc={() =>
+                setState((prev) => ({ ...prev, showCalendar: true }))
+              }
+            />
           </>
         )}
       </section>
