@@ -23,3 +23,7 @@ SERVER/BACKEND
 ### UX
 
 [UX Doc](UX.md)
+
+### How my styling system works
+
+[Styles Doc](STYLES.md)
