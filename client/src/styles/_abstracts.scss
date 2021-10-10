@@ -10,3 +10,28 @@
   align-items: center;
   justify-content: center;
 }
+
+/* Hanterar allt responsivt */
+@mixin for-size($size) {
+  @if $size == tablet {
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+      @content;
+    }
+  } @else if $size == laptop {
+    @media only screen and (min-width: 1024px) and (max-width: 1439px) {
+      @content;
+    }
+  } @else if $size == laptopL {
+    @media only screen and (min-width: 1440px) and (max-width: 1499px) {
+      @content;
+    }
+  } @else if $size == desktop {
+    @media only screen and (min-width: 1500px) {
+      @content;
+    }
+  } @else if $size == everything {
+    @media only screen and (min-width: 500px) and (max-width: 2000px) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,380 @@
+@use "./abstracts" as abs;
+@use "./variables" as var;
+
+//HOMEPAGE
+.homepageContainer {
+  .textContainer {
+    @include abs.for-size(laptopL) {
+      width: 40%;
+    }
+
+    @include abs.for-size(laptop) {
+      width: 55%;
+    }
+
+    @include abs.for-size(tablet) {
+      width: 80%;
+    }
+
+    @include abs.for-size(desktop) {
+      width: 30%;
+    }
+  }
+
+  .homepageBtn {
+    @include abs.for-size(laptopL) {
+      width: 200px;
+
+      &:hover {
+        box-shadow: 0px 0px 10px 0px grey;
+        cursor: pointer;
+      }
+    }
+
+    @include abs.for-size(laptop) {
+      width: 200px;
+
+      &:hover {
+        box-shadow: 0px 0px 10px 0px grey;
+        cursor: pointer;
+      }
+    }
+
+    @include abs.for-size(tablet) {
+      width: 200px;
+    }
+
+    @include abs.for-size(desktop) {
+      &:hover {
+        box-shadow: 0px 0px 10px 0px grey;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+//Discover
+.categoriesContainer {
+  @include abs.for-size(everything) {
+    @include abs.flex-column;
+    width: 100%;
+    height: 40vh;
+  }
+
+  .categoryCardContainer {
+    @include abs.for-size(desktop) {
+      width: 600px;
+
+      &:hover {
+        i {
+          margin-right: 2%;
+        }
+      }
+    }
+
+    @include abs.for-size(laptopL) {
+      width: 800px;
+
+      &:hover {
+        i {
+          margin-right: 2%;
+        }
+      }
+    }
+
+    @include abs.for-size(laptop) {
+      width: 600px;
+
+      &:hover {
+        i {
+          margin-right: 2%;
+        }
+      }
+    }
+
+    @include abs.for-size(tablet) {
+      width: 600px;
+    }
+  }
+}
+
+//On Discover
+.recomendedContainer {
+  h3 {
+    @include abs.for-size(everything) {
+      align-self: center;
+    }
+  }
+  .adCardContainer {
+    @include abs.for-size(desktop) {
+      width: 30%;
+      height: 300px;
+    }
+
+    @include abs.for-size(laptopL) {
+      width: 40%;
+      height: 300px;
+    }
+
+    @include abs.for-size(laptop) {
+      width: 50%;
+      height: 300px;
+    }
+
+    @include abs.for-size(tablet) {
+      width: 70%;
+      height: 300px;
+    }
+  }
+}
+
+//Category page / After you click on a category
+.categoryPageContainer {
+  .adCardContainer {
+    @include abs.for-size(desktop) {
+      width: 30%;
+      height: 300px;
+    }
+
+    @include abs.for-size(laptopL) {
+      width: 50%;
+      height: 300px;
+    }
+
+    @include abs.for-size(laptop) {
+      width: 50%;
+      height: 300px;
+    }
+
+    @include abs.for-size(tablet) {
+      width: 70%;
+      height: 300px;
+    }
+  }
+  i {
+    @include abs.for-size(desktop) {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+//When you click on a add
+.adPageContainer {
+  .calendarContainer {
+    .calendarHeader {
+      div {
+        @include abs.for-size(desktop) {
+          width: 55%;
+        }
+
+        @include abs.for-size(laptopL) {
+          width: 57%;
+        }
+
+        @include abs.for-size(laptop) {
+          width: 60%;
+        }
+
+        @include abs.for-size(tablet) {
+          width: 65%;
+        }
+      }
+    }
+  }
+  .goBack {
+    @include abs.for-size(everything) {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  img {
+    @include abs.for-size(everything) {
+      width: 40%;
+    }
+  }
+
+  .contentContainer {
+    @include abs.for-size(everything) {
+      @include abs.flex-column;
+    }
+
+    .container1 {
+      @include abs.for-size(everything) {
+        @include abs.flex-column;
+        width: 20%;
+      }
+    }
+
+    .priceList {
+      @include abs.for-size(everything) {
+        @include abs.flex-column;
+      }
+    }
+  }
+}
+
+//When you click on Add in the navbar
+.addFormContainer {
+  @include abs.for-size(everything) {
+    @include abs.flex-column;
+  }
+
+  i {
+    @include abs.for-size(everything) {
+      position: absolute;
+      top: 2%;
+      left: 2%;
+    }
+  }
+  form {
+    @include abs.for-size(everything) {
+      width: 60%;
+    }
+
+    @include abs.for-size(tablet) {
+      width: 70%;
+    }
+  }
+}
+
+//When you are about to rent a add
+.rentAdContainer {
+  .card {
+    @include abs.for-size(everything) {
+      width: 50%;
+    }
+
+    @include abs.for-size(tablet) {
+      width: 70%;
+    }
+  }
+
+  .formContainerRent {
+    @include abs.for-size(everything) {
+      width: 50%;
+
+      button {
+        width: 60%;
+      }
+    }
+
+    @include abs.for-size(desktop) {
+      button {
+        width: 30%;
+      }
+    }
+
+    form {
+      @include abs.for-size(everything) {
+        align-items: center;
+      }
+
+      .rentFormItemContainer {
+        @include abs.for-size(desktop) {
+          width: 50%;
+
+          span,
+          a {
+            margin-left: 20%;
+          }
+        }
+
+        @include abs.for-size(laptopL) {
+          width: 60%;
+
+          span,
+          a {
+            margin-left: 20%;
+          }
+        }
+
+        @include abs.for-size(laptop) {
+          width: 65%;
+
+          span,
+          a {
+            margin-left: 20%;
+          }
+        }
+
+        @include abs.for-size(tablet) {
+          width: 90%;
+
+          span,
+          a {
+            margin-left: 20%;
+          }
+        }
+      }
+    }
+  }
+}
+
+//When you gonna pay
+.payContainer {
+  .swishLogo {
+    @include abs.for-size(desktop) {
+      width: 25%;
+    }
+    @include abs.for-size(laptopL) {
+      width: 25%;
+    }
+
+    @include abs.for-size(laptop) {
+      width: 35%;
+    }
+
+    @include abs.for-size(tablet) {
+      width: 45%;
+    }
+  }
+  .cardLogo {
+    @include abs.for-size(desktop) {
+      width: 20%;
+    }
+    @include abs.for-size(laptopL) {
+      width: 20%;
+    }
+
+    @include abs.for-size(laptop) {
+      width: 30%;
+    }
+
+    @include abs.for-size(tablet) {
+      width: 40%;
+    }
+  }
+}
+
+.rentalcondsContainer {
+  @include abs.for-size(everything) {
+    @include abs.flex-column;
+    width: 100%;
+
+    i {
+      align-self: flex-start;
+    }
+
+    p {
+      width: 40%;
+      text-align: center;
+    }
+  }
+}
+
+.mainBtn {
+  @include abs.for-size(everything) {
+    width: 20%;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @include abs.for-size(tablet) {
+    width: 30%;
+  }
+}
