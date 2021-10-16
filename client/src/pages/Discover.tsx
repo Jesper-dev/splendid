@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CategoryCard } from "../components/discover/CategoryCard";
 import { AdCard } from "../components/discover/AdCard";
+import { Searchbar } from "../components/Searchbar";
 import axios from "axios";
 
 interface DbObject {
@@ -17,11 +18,12 @@ interface DbObject {
 
 const Discover = () => {
   const [state, setState] = useState<{
-    dbObj: Array<DbObject>;
+    dbData: Array<DbObject>;
     done: boolean;
     searchTerm: string;
+    searchArray: any[];
   }>({
-    dbObj: [
+    dbData: [
       {
         _id: "",
         title: "",
@@ -36,6 +38,7 @@ const Discover = () => {
     ],
     done: false,
     searchTerm: "",
+    searchArray: [],
   });
   const categoryTexts = ["Sport och Fritid", "Verktyg"]; //Texts for the two different categories.
   useEffect(() => {
@@ -49,27 +52,30 @@ const Discover = () => {
     axios
       .post("https://splendidsrv.herokuapp.com/api/ads/all")
       .then((res) =>
-        setState((prev) => ({ ...prev, dbObj: res.data, done: true }))
+        setState((prev) => ({
+          ...prev,
+          dbData: res.data,
+          done: true,
+          searchArray: [],
+        }))
       )
       .catch((err) => console.log(err));
+
+    console.log(state.searchArray);
   };
 
-  /** Körs när vi klickar på sök knappen, för att få fram den ad man sökt på */
-  const onFilterAdsClick = () => {
-    const filteredArr = state.dbObj.filter((obj) =>
-      obj.title.toLocaleLowerCase().includes(state.searchTerm.toLowerCase())
-    );
-    console.log(state.dbObj);
-    setState((prev) => ({ ...prev, dbObj: filteredArr }));
-  };
-
-  /** Körs när vi skriver, används för att få tillbaka alla ads när sökrutan är tom */
+  /** Körs när vi skriver i sökruan, filtrerar dbObject arrayen och ger sökresultat */
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState((prev) => ({ ...prev, searchTerm: e.target.value }));
     const text = e.target.value;
     if (text === "") {
-      fetchDB();
+      setState((prev) => ({ ...prev, searchArray: [] }));
+    } else {
+      const filteredArr = state.dbData.filter((obj) =>
+        obj.title.toLocaleLowerCase().includes(text.toLowerCase())
+      );
+      setState((prev) => ({ ...prev, searchArray: filteredArr }));
     }
-    setState((prev) => ({ ...prev, searchTerm: e.target.value }));
   };
 
   return (
@@ -81,30 +87,42 @@ const Discover = () => {
           return <CategoryCard key={i} text={item} />;
         })}
       </section>
-      <section className="searchbarContainer">
-        <input
-          type="text"
-          value={state.searchTerm}
-          onChange={(e) => onChangeSearch(e)}
-        />
-        <button onClick={() => onFilterAdsClick()}>sök</button>
-      </section>
+      <Searchbar
+        searchTerm={state.searchTerm}
+        onChange={onChangeSearch}
+        // onFilter={onFilterAdsClick}
+      />
       <section className="recomendedContainer">
         <h3>Rekommenderade produkter</h3>
         {/* Mappar ut alla ads/annonser från datan vi hämta från databasen när allt är klart, done = true */}
         {state.done ? (
-          state.dbObj.map((item, i) => {
-            return (
-              <AdCard
-                key={i}
-                _id={item._id}
-                title={item.title}
-                price={item.price[0]}
-                place={item.place}
-                pic={item.pic ? item.pic : ""}
-              />
-            );
-          })
+          state.searchArray.length == 0 ? (
+            state.dbData.map((item, i) => {
+              return (
+                <AdCard
+                  key={i}
+                  _id={item._id}
+                  title={item.title}
+                  price={item.price[0]}
+                  place={item.place}
+                  pic={item.pic ? item.pic : ""}
+                />
+              );
+            })
+          ) : (
+            state.searchArray.map((item, i) => {
+              return (
+                <AdCard
+                  key={i}
+                  _id={item._id}
+                  title={item.title}
+                  price={item.price[0]}
+                  place={item.place}
+                  pic={item.pic ? item.pic : ""}
+                />
+              );
+            })
+          )
         ) : (
           <p>Loading...</p>
         )}
