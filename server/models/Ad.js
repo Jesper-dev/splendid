@@ -33,7 +33,7 @@ const AdSchema = new Schema({
     type: Boolean,
     required: false,
   },
-  price: [{ type: String, required: false }],
+  price: [{ type: Number, required: false }],
   terms: {
     type: String,
     required: true,

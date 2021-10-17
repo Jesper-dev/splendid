@@ -12,7 +12,7 @@ interface DbObj {
   title: string;
   desc: string;
   pic: string;
-  price: string[];
+  price: number[];
   pickup: boolean;
   adress?: string;
   delivery: boolean;
@@ -30,10 +30,10 @@ const CreateAdd = () => {
     category: string;
     title: string;
     desc: string;
-    priceArray: string[];
-    price1: string;
-    price2: string;
-    price3: string;
+    priceArray: number[];
+    price1: number;
+    price2: number;
+    price3: number;
     pickup: boolean;
     adress: string;
     delivery: boolean;
@@ -45,10 +45,10 @@ const CreateAdd = () => {
     category: "Sport och Fritid",
     title: "",
     desc: "",
-    priceArray: [""],
-    price1: "",
-    price2: "",
-    price3: "",
+    priceArray: [0, 0, 0],
+    price1: 0,
+    price2: 0,
+    price3: 0,
     pickup: false,
     adress: "",
     delivery: false,
@@ -79,15 +79,18 @@ const CreateAdd = () => {
         break;
 
       case "price1":
-        setState((prev) => ({ ...prev, price1: e.target.value }));
+        const price1 = parseInt(e.target.value);
+        setState((prev) => ({ ...prev, price1: price1 }));
         break;
 
       case "price2":
-        setState((prev) => ({ ...prev, price2: e.target.value }));
+        const price2 = parseInt(e.target.value);
+        setState((prev) => ({ ...prev, price2: price2 }));
         break;
 
       case "price3":
-        setState((prev) => ({ ...prev, price3: e.target.value }));
+        const price3 = parseInt(e.target.value);
+        setState((prev) => ({ ...prev, price3: price3 }));
         break;
 
       case "pickup":
@@ -126,11 +129,7 @@ const CreateAdd = () => {
       return false;
     } else if (state.pic === "") {
       return false;
-    } else if (
-      state.price1 === "" ||
-      state.price2 === "" ||
-      state.price3 === ""
-    ) {
+    } else if (!state.price1 || !state.price2 || !state.price3) {
       return false;
     } else if (state.pickup === false && state.delivery === false) {
       return false;
@@ -151,7 +150,7 @@ const CreateAdd = () => {
       alert("Du har glömt något fält");
       return;
     }
-    let arr: string[] = [];
+    let arr: number[] = [];
     arr.push(state.price1, state.price2, state.price3);
     //Vårat objekt / req.body som vi skickar till API för att lägga till en annons i mongoDB / Databasen
     const newDbObj: DbObj = {
@@ -252,24 +251,30 @@ const CreateAdd = () => {
                 <span onClick={() => onFileUpload()}>Välj denna bild</span>
                 <span className="infoText">({values.infoText})</span>
               </div>
-              =<label>{values.price}</label>
+              <label>{values.price}</label>
               <input
                 placeholder="Pris för en dag"
-                type="text"
+                type="number"
+                min={1}
+                max={2000}
                 id="price1"
                 value={state.price1}
                 onChange={(e) => onChange(e)}
               />
               <input
                 placeholder="Pris för 3 dagar"
-                type="text"
+                type="number"
+                min={1}
+                max={2000}
                 id="price2"
                 value={state.price2}
                 onChange={(e) => onChange(e)}
               />
               <input
                 placeholder="Pris för en vecka"
-                type="text"
+                type="number"
+                min={1}
+                max={2000}
                 id="price3"
                 value={state.price3}
                 onChange={(e) => onChange(e)}

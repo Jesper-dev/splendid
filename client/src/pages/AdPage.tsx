@@ -11,7 +11,7 @@ import "react-calendar/dist/Calendar.css";
 interface DbObject {
   _id: string;
   title: string;
-  price: string[];
+  price: number[];
   desc: string;
   place: string;
   name: string;
@@ -30,11 +30,12 @@ const AdPage = () => {
     showCalendar: boolean;
     showInfo: boolean;
     infoPrice: number;
+    daysToLend: string;
   }>({
     dbObj: {
       _id: "",
       title: "",
-      price: [""],
+      price: [],
       desc: "",
       place: "",
       name: "",
@@ -47,6 +48,7 @@ const AdPage = () => {
     showCalendar: false,
     showInfo: false,
     infoPrice: 0,
+    daysToLend: "",
   });
   let slug = CheckSlug();
   const dispatch = useDispatch();
@@ -70,10 +72,29 @@ const AdPage = () => {
 
   //Sätter vilken dag man valt i globala db objekt state (redux)
   const onClickCalendar = () => {
-    const priceInt = parseInt(state.dbObj.price[0]);
     state.dbObj = { ...state.dbObj, timeperiod: value.toDateString() };
+    setState((prev) => ({ ...prev, infoPrice: state.dbObj.price[0] }));
     dispatch(add(state.dbObj));
-    setState((prev) => ({ ...prev, showInfo: true, infoPrice: priceInt }));
+    setState((prev) => ({ ...prev, showInfo: true }));
+  };
+
+  const onDayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setState((prev) => ({ ...prev, daysToLend: e.target.value }));
+    switch (e.target.value) {
+      case "1 dag":
+        setState((prev) => ({ ...prev, infoPrice: state.dbObj.price[0] }));
+        break;
+      case "2 dagar":
+        setState((prev) => ({ ...prev, infoPrice: state.dbObj.price[1] }));
+        break;
+      case "5 dagar":
+        setState((prev) => ({ ...prev, infoPrice: state.dbObj.price[2] }));
+        break;
+
+      default:
+        break;
+    }
+    console.log(e.target.value);
   };
 
   const onSubmitCalendar = () => {
@@ -106,7 +127,13 @@ const AdPage = () => {
                 <p>
                   Låna <span>{value.toDateString().slice(0, 15)}</span>
                 </p>
-                <h1>Pris: {state.infoPrice + 50}</h1>
+                <span>Låneperiod</span>
+                <select name="" id="category" onChange={(e) => onDayChange(e)}>
+                  <option value="1 dag">1 dag</option>
+                  <option value="2 dagar">2 dagar</option>
+                  <option value="5 dagar">5 dagar</option>
+                </select>
+                <h1>Pris: {state.infoPrice + 50} kr</h1>
                 <span>Inklusive bokningsavgift</span>
               </div>
             ) : null}

@@ -371,6 +371,10 @@ form {
       width: 80%;
     }
 
+    .infoContainer {
+      @include abs.flex-column;
+    }
+
     .calendarHeader {
       background-color: var.$primary-light;
       width: 100%;
