@@ -1,6 +1,20 @@
 @use "./abstracts" as abs;
 @use "./variables" as var;
 
+nav {
+  ul {
+    li {
+      a {
+        @include abs.for-size(desktop) {
+          &:hover {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
 //HOMEPAGE
 .homepageContainer {
   .textContainer {
@@ -237,6 +251,100 @@
 
     @include abs.for-size(tablet) {
       width: 70%;
+
+      .optionsContainer {
+        div {
+          z-index: 10;
+          input {
+            width: 8%;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          .adressContainer {
+            margin-top: 5%;
+            margin-left: 5%;
+
+            input {
+              width: 20%;
+            }
+          }
+        }
+      }
+    }
+
+    @include abs.for-size(laptopL) {
+      .optionsContainer {
+        div {
+          z-index: 10;
+          input {
+            width: 6%;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          .adressContainer {
+            margin-top: 3%;
+            margin-left: 3%;
+
+            input {
+              width: 20%;
+            }
+          }
+        }
+      }
+    }
+
+    @include abs.for-size(laptop) {
+      .optionsContainer {
+        div {
+          z-index: 10;
+          input {
+            width: 6%;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          .adressContainer {
+            margin-top: 3%;
+            margin-left: 3%;
+
+            input {
+              width: 20%;
+            }
+          }
+        }
+      }
+    }
+
+    @include abs.for-size(desktop) {
+      .optionsContainer {
+        div {
+          z-index: 10;
+          input {
+            width: 4%;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          .adressContainer {
+            margin-top: 2%;
+            margin-left: 3%;
+
+            input {
+              width: 20%;
+            }
+          }
+        }
+      }
     }
   }
 }
