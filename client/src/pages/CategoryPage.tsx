@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { CheckSlug } from "../api/checkSlug";
 import { AdCard } from "../components/discover/AdCard";
+import { Searchbar } from "../components/Searchbar";
 import axios from "axios";
 
 interface DbObject {
@@ -18,10 +19,12 @@ interface DbObject {
 
 const CategoryPage = () => {
   const [state, setState] = useState<{
-    dbObj: Array<DbObject>;
+    dbData: Array<DbObject>;
     done: boolean;
+    searchTerm: string;
+    searchArray: any[];
   }>({
-    dbObj: [
+    dbData: [
       {
         _id: "",
         title: "",
@@ -35,6 +38,8 @@ const CategoryPage = () => {
       },
     ],
     done: false,
+    searchTerm: "",
+    searchArray: [],
   });
   let slug = CheckSlug();
   const history = useHistory();
@@ -49,7 +54,7 @@ const CategoryPage = () => {
         const newArr = res.data.filter(
           (item: DbObject) => item.category === slug
         );
-        setState((prev) => ({ ...prev, dbObj: newArr, done: true }));
+        setState((prev) => ({ ...prev, dbData: newArr, done: true }));
       })
       .catch((err) => console.log(err));
   }, [slug]);
@@ -58,22 +63,54 @@ const CategoryPage = () => {
     fetchDB();
   }, [slug, fetchDB]);
 
+  /** Körs när vi skriver i sökruan, filtrerar dbObject arrayen och ger sökresultat */
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState((prev) => ({ ...prev, searchTerm: e.target.value }));
+    const text = e.target.value;
+    if (text === "") {
+      setState((prev) => ({ ...prev, searchArray: [] }));
+    } else {
+      const filteredArr = state.dbData.filter((obj) =>
+        obj.title.toLocaleLowerCase().includes(text.toLowerCase())
+      );
+      setState((prev) => ({ ...prev, searchArray: filteredArr }));
+    }
+  };
+
   return (
     <section className="categoryPageContainer">
       <i className="fas fa-chevron-left" onClick={() => history.goBack()}></i>
+
+      <Searchbar searchTerm={state.searchTerm} onChange={onChangeSearch} />
+
       {state.done ? (
-        state.dbObj.map((item, i) => {
-          return (
-            <AdCard
-              key={i}
-              _id={item._id}
-              title={item.title}
-              price={item.price[0]}
-              place={item.place}
-              pic={item.pic ? item.pic : ""}
-            />
-          );
-        })
+        state.searchArray.length === 0 ? (
+          state.dbData.map((item, i) => {
+            return (
+              <AdCard
+                key={i}
+                _id={item._id}
+                title={item.title}
+                price={item.price[0]}
+                place={item.place}
+                pic={item.pic ? item.pic : ""}
+              />
+            );
+          })
+        ) : (
+          state.searchArray.map((item, i) => {
+            return (
+              <AdCard
+                key={i}
+                _id={item._id}
+                title={item.title}
+                price={item.price[0]}
+                place={item.place}
+                pic={item.pic ? item.pic : ""}
+              />
+            );
+          })
+        )
       ) : (
         <p>Loading...</p>
       )}

@@ -86,11 +86,7 @@ const Discover = () => {
           return <CategoryCard key={i} text={item} />;
         })}
       </section>
-      <Searchbar
-        searchTerm={state.searchTerm}
-        onChange={onChangeSearch}
-        // onFilter={onFilterAdsClick}
-      />
+      <Searchbar searchTerm={state.searchTerm} onChange={onChangeSearch} />
       <section className="recomendedContainer">
         <h3>Rekommenderade produkter</h3>
         {/* Mappar ut alla ads/annonser från datan vi hämta från databasen när allt är klart, done = true */}

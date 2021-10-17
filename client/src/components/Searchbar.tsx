@@ -15,9 +15,9 @@ export const Searchbar = ({
   onChange,
 }: SearchbarProps) => {
   return (
-    <section className="searchbarContainer">
+    <div className="searchbarContainer">
       <input type="text" value={searchTerm} onChange={(e) => onChange(e)} />
       {/* <button onClick={() => onFilter()}>sök</button> */}
-    </section>
+    </div>
   );
 };
