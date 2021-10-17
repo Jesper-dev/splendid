@@ -68,6 +68,35 @@ nav {
 }
 
 //Discover
+
+.searchbarContainer {
+  @include abs.for-size(desktop) {
+    height: 150px;
+    input {
+      width: 20%;
+    }
+  }
+
+  @include abs.for-size(laptopL) {
+    height: 150px;
+    input {
+      width: 25%;
+    }
+  }
+
+  @include abs.for-size(laptop) {
+    input {
+      width: 30%;
+    }
+  }
+
+  @include abs.for-size(tablet) {
+    input {
+      width: 45%;
+    }
+  }
+}
+
 .categoriesContainer {
   @include abs.for-size(everything) {
     @include abs.flex-column;
