@@ -7,3 +7,7 @@ Jag har gjort på ett sätt som har gjort det lite lättare att koda. Man kan t.
 ## Create a ad flow
 
 Fungerar på samma sätt som protoypen. Har inte gjort några större ändringar så. Lagt till en knapp för att välja bild är den största ändringen från prototypen. Så har mest ändrat stilen lite bara.
+
+### Discover
+
+Satte dit en sökruta så att man kan söka på produkter att hyra.
