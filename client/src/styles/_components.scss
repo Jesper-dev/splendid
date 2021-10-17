@@ -206,10 +206,14 @@ form {
       @include abs.flex-column;
       background-color: white;
       width: 100%;
-      height: 60px;
+      height: 70px;
 
       .fileInput {
         width: 50%;
+      }
+
+      .infoText {
+        font-size: var.$text-smaller;
       }
     }
 

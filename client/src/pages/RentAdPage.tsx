@@ -70,11 +70,11 @@ const RentAdPage = () => {
 
   /** Används för att validera om man har tryckt i alla "required" fält */
   const validation = () => {
-    if (state.pickup == false && state.delivery == false) {
+    if (state.pickup === false && state.delivery === false) {
       return false;
-    } else if (state.swish == false && state.card == false) {
+    } else if (state.swish === false && state.card === false) {
       return false;
-    } else if (state.terms == false) {
+    } else if (state.terms === false) {
       return false;
     } else {
       return true;
@@ -99,7 +99,7 @@ const RentAdPage = () => {
       <h1>Uthyraren har godkänt din förfrågan!</h1>
       <div className="card">
         <div className="content">
-          <img src={ad.pic} />
+          <img src={ad.pic} alt="ad img" />
           <div>
             <h3>{ad.title}</h3>
             <p>{ad.price[0]} kr/dag</p>

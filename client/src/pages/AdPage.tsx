@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { CheckSlug } from "../api/checkSlug";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { MainBtn } from "../components/MainBtn";
-import { RootState } from "../store";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { add } from "../redux/adSlice";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -24,9 +23,6 @@ interface DbObject {
 }
 
 const AdPage = () => {
-  const ad = useSelector((state: RootState) => state.ad.AdObj);
-  const dispatch = useDispatch();
-  const history = useHistory();
   const [value, onChange] = useState(new Date());
   const [state, setState] = useState<{
     dbObj: DbObject;
@@ -53,10 +49,10 @@ const AdPage = () => {
     infoPrice: 0,
   });
   let slug = CheckSlug();
-  useEffect(() => {
-    fetchDB();
-  }, []);
-  const fetchDB = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const fetchDB = useCallback(() => {
     //Fetching data from API
     //Kan inte använda functionen i API mappen för denna behöver en setState!
     axios
@@ -66,7 +62,11 @@ const AdPage = () => {
         dispatch(add(res.data));
       })
       .catch((err) => console.log(err));
-  };
+  }, [dispatch, slug]);
+
+  useEffect(() => {
+    fetchDB();
+  }, [fetchDB]);
 
   //Sätter vilken dag man valt i globala db objekt state (redux)
   const onClickCalendar = () => {
@@ -120,7 +120,7 @@ const AdPage = () => {
               className="fas fa-chevron-left goBack"
               onClick={() => history.goBack()}
             ></i>
-            <img src={state.dbObj.pic} />
+            <img src={state.dbObj.pic} alt="Pic of the ad" />
             <div className="contentContainer">
               <h1>{state.dbObj.title}</h1>
               <div className="container1">

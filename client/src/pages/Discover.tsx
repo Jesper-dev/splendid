@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { CategoryCard } from "../components/discover/CategoryCard";
 import { AdCard } from "../components/discover/AdCard";
 import { Searchbar } from "../components/Searchbar";
@@ -41,10 +41,8 @@ const Discover = () => {
     searchArray: [],
   });
   const categoryTexts = ["Sport och Fritid", "Verktyg"]; //Texts for the two different categories.
-  useEffect(() => {
-    fetchDB();
-  }, []);
-  const fetchDB = () => {
+
+  const fetchDB = useCallback(() => {
     //http://localhost:5000/api/ads/get
     //https://splendidsrv.herokuapp.com/api/ads/get
     //Fetching data from API
@@ -56,13 +54,14 @@ const Discover = () => {
           ...prev,
           dbData: res.data,
           done: true,
-          searchArray: [],
         }))
       )
       .catch((err) => console.log(err));
+  }, []);
 
-    console.log(state.searchArray);
-  };
+  useEffect(() => {
+    fetchDB();
+  }, [fetchDB]);
 
   /** Körs när vi skriver i sökruan, filtrerar dbObject arrayen och ger sökresultat */
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +95,7 @@ const Discover = () => {
         <h3>Rekommenderade produkter</h3>
         {/* Mappar ut alla ads/annonser från datan vi hämta från databasen när allt är klart, done = true */}
         {state.done ? (
-          state.searchArray.length == 0 ? (
+          state.searchArray.length === 0 ? (
             state.dbData.map((item, i) => {
               return (
                 <AdCard

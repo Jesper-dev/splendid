@@ -1,7 +1,4 @@
-import React, { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
-
-interface Props {}
 
 const RentalConds = () => {
   const history = useHistory();

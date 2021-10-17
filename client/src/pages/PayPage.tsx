@@ -10,9 +10,9 @@ const PayPage = () => {
   return (
     <section className="payContainer">
       {pathname.includes("/swish") ? (
-        <img src={swish} className="swishLogo" />
+        <img src={swish} className="swishLogo" alt="swish logo" />
       ) : (
-        <img src={card} className="cardLogo" />
+        <img src={card} className="cardLogo" alt="swish logo" />
       )}
       <MainBtn text="Betala" onClickFunc={() => history.push("/discover")} />
     </section>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { usePathname } from "../hooks/urlHook";
 
 export const Header = () => {
@@ -8,10 +8,10 @@ export const Header = () => {
   });
   const path = usePathname();
 
-  const makeTitle = () => {
+  const makeTitle = useCallback(() => {
     const newTitle = path.slice(10);
     setState((prev) => ({ ...prev, title: newTitle }));
-  };
+  }, [path]);
 
   //Changes the headers title or hide / shows it
   useEffect(() => {
@@ -42,7 +42,7 @@ export const Header = () => {
     } else {
       setState((prev) => ({ ...prev, isTrue: false }));
     }
-  }, [path]);
+  }, [path, makeTitle]);
 
   return (
     <>

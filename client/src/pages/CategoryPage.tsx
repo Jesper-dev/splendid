@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { CheckSlug } from "../api/checkSlug";
 import { AdCard } from "../components/discover/AdCard";
@@ -38,12 +38,9 @@ const CategoryPage = () => {
   });
   let slug = CheckSlug();
   const history = useHistory();
-  useEffect(() => {
-    fetchDB();
-  }, [slug]);
 
   //Hämtar data från databasen och filtrear den direkt så att man enbart får annonser men den kategorin som man klicka på
-  const fetchDB = () => {
+  const fetchDB = useCallback(() => {
     //http://localhost:5000/api/ads/all
     //https://splendidsrv.herokuapp.com/api/ads/all
     axios
@@ -55,7 +52,11 @@ const CategoryPage = () => {
         setState((prev) => ({ ...prev, dbObj: newArr, done: true }));
       })
       .catch((err) => console.log(err));
-  };
+  }, [slug]);
+
+  useEffect(() => {
+    fetchDB();
+  }, [slug, fetchDB]);
 
   return (
     <section className="categoryPageContainer">

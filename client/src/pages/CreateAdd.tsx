@@ -1,8 +1,10 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Form } from "../components/Form";
 import { MainBtn } from "../components/MainBtn";
 import { dbFunc } from "../api/db";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 //Interface som beskvier bår req.body som vi skickar till databasen, (typescript only)
 interface DbObj {
@@ -21,7 +23,9 @@ interface DbObj {
 }
 
 const CreateAdd = () => {
+  const sended = useSelector((state: RootState) => state.sended.sended);
   const history = useHistory();
+  const [checkIfTrue, setCheckIfTrue] = useState<string>();
   const [state, setState] = useState<{
     category: string;
     title: string;
@@ -112,8 +116,41 @@ const CreateAdd = () => {
     }
   };
 
+  /** Används för att validera om man har tryckt i alla "required" fält */
+  const validation = () => {
+    if (state.category === "") {
+      return false;
+    } else if (state.title === "") {
+      return false;
+    } else if (state.desc === "") {
+      return false;
+    } else if (state.pic === "") {
+      return false;
+    } else if (
+      state.price1 === "" ||
+      state.price2 === "" ||
+      state.price3 === ""
+    ) {
+      return false;
+    } else if (state.pickup === false && state.delivery === false) {
+      return false;
+    } else if (state.pickup === true && state.adress === "") {
+      return false;
+    } else if (state.terms === "") {
+      return false;
+    } else if (state.value === "") {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!validation()) {
+      alert("Du har glömt något fält");
+      return;
+    }
     let arr: string[] = [];
     arr.push(state.price1, state.price2, state.price3);
     //Vårat objekt / req.body som vi skickar till API för att lägga till en annons i mongoDB / Databasen
@@ -134,10 +171,14 @@ const CreateAdd = () => {
     //https://splendidsrv.herokuapp.com/api/ads/add
     //http://localhost:5000/api/ads/add
     dbFunc("https://splendidsrv.herokuapp.com/api/ads/add", "post", newDbObj);
-    console.log("Submited");
-    setTimeout(() => {
-      history.push("/discover");
-    }, 2000);
+
+    if (sended) {
+      setTimeout(() => {
+        history.push("/discover");
+      }, 2000);
+    } else {
+      alert("Pic is to big!");
+    }
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,6 +210,7 @@ const CreateAdd = () => {
           values={{
             category: "1. Kategori",
             desc: "2. Beskriv varan",
+            infoText: "Måste vara en JPG och under 55kb storlek",
             pic: "3. Bilder",
             price: "4. Pris",
             options: "5. Alternativ för upphämtning",
@@ -199,7 +241,6 @@ const CreateAdd = () => {
                 value={state.desc}
                 onChange={(e) => onChange(e)}
               ></textarea>
-
               <label>{values.pic}</label>
               <div className="chooseFileContainer">
                 <input
@@ -209,9 +250,9 @@ const CreateAdd = () => {
                   onChange={(e) => onFileChange(e)}
                 />
                 <span onClick={() => onFileUpload()}>Välj denna bild</span>
+                <span className="infoText">({values.infoText})</span>
               </div>
-
-              <label>{values.price}</label>
+              =<label>{values.price}</label>
               <input
                 placeholder="Pris för en dag"
                 type="text"
@@ -233,7 +274,6 @@ const CreateAdd = () => {
                 value={state.price3}
                 onChange={(e) => onChange(e)}
               />
-
               <label>{values.options}</label>
               <div className="optionsContainer">
                 <div>
@@ -273,7 +313,6 @@ const CreateAdd = () => {
                   genom att följa länken.
                 </p>
               </div>
-
               <label>{values.terms}</label>
               <input
                 placeholder="Villkor"
@@ -282,7 +321,6 @@ const CreateAdd = () => {
                 value={state.terms}
                 onChange={(e) => onChange(e)}
               />
-
               <label>{values.value}</label>
               <input
                 placeholder="Värde"
@@ -291,7 +329,6 @@ const CreateAdd = () => {
                 value={state.value}
                 onChange={(e) => onChange(e)}
               />
-
               <MainBtn
                 text={"publicera annons"}
                 onClickFunc={() => console.log("Hej")}
