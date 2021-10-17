@@ -27,3 +27,7 @@ SERVER/BACKEND
 ### How my styling system works
 
 [Styles Doc](STYLES.md)
+
+### Ändringar från prototypen
+
+[Website Doc](WEBSITE.md)
