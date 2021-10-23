@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -18,7 +18,7 @@ const HomePage = () => {
         dispatch(fetchDb(res.data));
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     fetchDB();

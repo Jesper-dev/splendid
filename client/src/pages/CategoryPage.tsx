@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CheckSlug } from "../api/checkSlug";
 import { AdCard } from "../components/discover/AdCard";
@@ -51,7 +51,7 @@ const CategoryPage = () => {
   useEffect(() => {
     const newArr = data.filter((item: DbObject) => item.category === slug);
     setState((prev) => ({ ...prev, categoryData: newArr, done: true }));
-  }, [slug]);
+  }, [slug, data]);
 
   /** Körs när vi skriver i sökruan, filtrerar data (redux) arrayen och ger sökresultatet */
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

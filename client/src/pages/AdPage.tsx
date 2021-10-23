@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { CheckSlug } from "../api/checkSlug";
 import { Link, useHistory } from "react-router-dom";
 import { MainBtn } from "../components/MainBtn";
@@ -61,7 +61,7 @@ const AdPage = () => {
     dispatch(add(clickedAd));
     console.log(clickedAd);
     setState((prev) => ({ ...prev, dbObj: clickedAd[0] }));
-  }, [slug]);
+  }, [slug, data, dispatch]);
 
   //Sätter vilken dag man valt i globala db objekt state (redux)
   const onClickCalendar = () => {

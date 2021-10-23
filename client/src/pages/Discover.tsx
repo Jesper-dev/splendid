@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { CategoryCard } from "../components/discover/CategoryCard";
 import { AdCard } from "../components/discover/AdCard";
 import { Searchbar } from "../components/Searchbar";
@@ -34,7 +34,7 @@ const Discover = () => {
 
   useEffect(() => {
     if (data[0]._id === "") setState((prev) => ({ ...prev, error: true }));
-  }, []);
+  }, [data]);
 
   return (
     <>

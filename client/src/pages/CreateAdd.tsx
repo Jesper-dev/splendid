@@ -25,7 +25,6 @@ interface DbObj {
 const CreateAdd = () => {
   const sended = useSelector((state: RootState) => state.sended.sended);
   const history = useHistory();
-  const [checkIfTrue, setCheckIfTrue] = useState<string>();
   const [state, setState] = useState<{
     category: string;
     title: string;
