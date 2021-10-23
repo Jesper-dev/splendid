@@ -1,7 +1,29 @@
+import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { fetchDb } from "../redux/dbSlice";
 
 const HomePage = () => {
   let history = useHistory();
+  const dispatch = useDispatch();
+
+  const fetchDB = useCallback(() => {
+    //http://localhost:5000/api/ads/get
+    //https://splendidsrv.herokuapp.com/api/ads/get
+    //Fetching data from API
+    axios
+      .post("https://splendidsrv.herokuapp.com/api/ads/all")
+      .then((res) => {
+        dispatch(fetchDb(res.data));
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    fetchDB();
+  }, [fetchDB]);
+
   return (
     <>
       <section className="homepageContainer">
