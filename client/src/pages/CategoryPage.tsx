@@ -3,32 +3,36 @@ import { useHistory } from "react-router-dom";
 import { CheckSlug } from "../api/checkSlug";
 import { AdCard } from "../components/discover/AdCard";
 import { Searchbar } from "../components/Searchbar";
-import axios from "axios";
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
 
 interface DbObject {
   _id: string;
   title: string;
-  price: string[];
+  price: number[];
   desc: string;
   place: string;
   name: string;
   date: string;
   category: string;
   pic: string;
+  address?: string;
+  timeperiod?: string;
 }
 
 const CategoryPage = () => {
+  const data = useSelector((state: RootState) => state.dbSlice.data);
   const [state, setState] = useState<{
-    dbData: Array<DbObject>;
+    categoryData: Array<DbObject>;
     done: boolean;
     searchTerm: string;
     searchArray: any[];
   }>({
-    dbData: [
+    categoryData: [
       {
         _id: "",
         title: "",
-        price: [""],
+        price: [],
         desc: "",
         place: "",
         name: "",
@@ -44,33 +48,19 @@ const CategoryPage = () => {
   let slug = CheckSlug();
   const history = useHistory();
 
-  //Hämtar data från databasen och filtrear den direkt så att man enbart får annonser men den kategorin som man klicka på
-  const fetchDB = useCallback(() => {
-    //http://localhost:5000/api/ads/all
-    //https://splendidsrv.herokuapp.com/api/ads/all
-    axios
-      .post("https://splendidsrv.herokuapp.com/api/ads/all")
-      .then((res) => {
-        const newArr = res.data.filter(
-          (item: DbObject) => item.category === slug
-        );
-        setState((prev) => ({ ...prev, dbData: newArr, done: true }));
-      })
-      .catch((err) => console.log(err));
+  useEffect(() => {
+    const newArr = data.filter((item: DbObject) => item.category === slug);
+    setState((prev) => ({ ...prev, categoryData: newArr, done: true }));
   }, [slug]);
 
-  useEffect(() => {
-    fetchDB();
-  }, [slug, fetchDB]);
-
-  /** Körs när vi skriver i sökruan, filtrerar dbObject arrayen och ger sökresultat */
+  /** Körs när vi skriver i sökruan, filtrerar data (redux) arrayen och ger sökresultatet */
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState((prev) => ({ ...prev, searchTerm: e.target.value }));
     const text = e.target.value;
     if (text === "") {
       setState((prev) => ({ ...prev, searchArray: [] }));
     } else {
-      const filteredArr = state.dbData.filter((obj) =>
+      const filteredArr = data.filter((obj) =>
         obj.title.toLocaleLowerCase().includes(text.toLowerCase())
       );
       setState((prev) => ({ ...prev, searchArray: filteredArr }));
@@ -83,13 +73,13 @@ const CategoryPage = () => {
       <Searchbar searchTerm={state.searchTerm} onChange={onChangeSearch} />
       {state.done ? (
         state.searchArray.length === 0 ? (
-          state.dbData.map((item, i) => {
+          state.categoryData.map((item, i) => {
             return (
               <AdCard
                 key={i}
                 _id={item._id}
                 title={item.title}
-                price={item.price[0]}
+                price={item.price[0] ? item.price[0].toString() : "0"}
                 place={item.place}
                 pic={item.pic ? item.pic : ""}
               />

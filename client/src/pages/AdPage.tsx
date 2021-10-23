@@ -1,10 +1,11 @@
 import { useEffect, useState, useCallback } from "react";
 import { CheckSlug } from "../api/checkSlug";
 import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
 import { MainBtn } from "../components/MainBtn";
 import { useDispatch } from "react-redux";
 import { add } from "../redux/adSlice";
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -23,10 +24,10 @@ interface DbObject {
 }
 
 const AdPage = () => {
+  const data = useSelector((state: RootState) => state.dbSlice.data);
   const [value, onChange] = useState(new Date());
   const [state, setState] = useState<{
     dbObj: DbObject;
-    done: boolean;
     showCalendar: boolean;
     showInfo: boolean;
     infoPrice: number;
@@ -44,7 +45,6 @@ const AdPage = () => {
       pic: "",
       address: "",
     },
-    done: false,
     showCalendar: false,
     showInfo: false,
     infoPrice: 0,
@@ -54,21 +54,14 @@ const AdPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const fetchDB = useCallback(() => {
-    //Fetching data from API
-    //Kan inte använda functionen i API mappen för denna behöver en setState!
-    axios
-      .post("https://splendidsrv.herokuapp.com/api/ads/single", { id: slug })
-      .then((res) => {
-        setState((prev) => ({ ...prev, dbObj: res.data, done: true }));
-        dispatch(add(res.data));
-      })
-      .catch((err) => console.log(err));
-  }, [dispatch, slug]);
-
   useEffect(() => {
-    fetchDB();
-  }, [fetchDB]);
+    const clickedAd = data.filter((item) => {
+      return item._id === slug;
+    });
+    dispatch(add(clickedAd));
+    console.log(clickedAd);
+    setState((prev) => ({ ...prev, dbObj: clickedAd[0] }));
+  }, [slug]);
 
   //Sätter vilken dag man valt i globala db objekt state (redux)
   const onClickCalendar = () => {
