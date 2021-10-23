@@ -80,9 +80,7 @@ const CategoryPage = () => {
   return (
     <section className="categoryPageContainer">
       <i className="fas fa-chevron-left" onClick={() => history.goBack()}></i>
-
       <Searchbar searchTerm={state.searchTerm} onChange={onChangeSearch} />
-
       {state.done ? (
         state.searchArray.length === 0 ? (
           state.dbData.map((item, i) => {

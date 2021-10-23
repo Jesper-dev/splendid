@@ -19,3 +19,4 @@
 ## Skillnad från protoypen och detta projekt
 
 - **Bättre navbar**
+- **En sökruta**
