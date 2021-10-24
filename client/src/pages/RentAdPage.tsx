@@ -94,6 +94,10 @@ const RentAdPage = () => {
     }
   };
 
+  /*
+      Priset är fel! Står alltid det priset som är en dag och inte hur mycket det är för de dagarna man ska låna prylen för
+  */
+
   return (
     <section className="rentAdContainer">
       <h1>Uthyraren har godkänt din förfrågan!</h1>

@@ -59,7 +59,6 @@ const AdPage = () => {
       return item._id === slug;
     });
     dispatch(add(clickedAd));
-    console.log(clickedAd);
     setState((prev) => ({ ...prev, dbObj: clickedAd[0] }));
   }, [slug, data, dispatch]);
 

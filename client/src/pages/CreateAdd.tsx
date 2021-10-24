@@ -3,8 +3,6 @@ import { useHistory } from "react-router-dom";
 import { Form } from "../components/Form";
 import { MainBtn } from "../components/MainBtn";
 import { dbFunc } from "../api/db";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
 
 //Interface som beskvier bår req.body som vi skickar till databasen, (typescript only)
 interface DbObj {
@@ -23,7 +21,6 @@ interface DbObj {
 }
 
 const CreateAdd = () => {
-  const sended = useSelector((state: RootState) => state.sended.sended);
   const history = useHistory();
   const [state, setState] = useState<{
     category: string;
@@ -40,6 +37,7 @@ const CreateAdd = () => {
     value: string;
     pic: any;
     timeperiod: string;
+    picDone: boolean;
   }>({
     category: "Sport och Fritid",
     title: "",
@@ -55,6 +53,7 @@ const CreateAdd = () => {
     value: "",
     pic: "",
     timeperiod: "",
+    picDone: false,
   });
 
   //Sätter värdet på alla states ovanför när vi skriver i formet
@@ -170,33 +169,42 @@ const CreateAdd = () => {
     //http://localhost:5000/api/ads/add
     dbFunc("https://splendidsrv.herokuapp.com/api/ads/add", "post", newDbObj);
 
-    if (sended) {
-      setTimeout(() => {
-        history.push("/discover");
-      }, 2000);
-    } else {
-      alert("Pic is to big!");
-    }
+    setTimeout(() => {
+      history.push("/discover");
+    }, 2000);
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files![0];
-    const reader = new FileReader();
-    setState((prev) => ({ ...prev, pic: file }));
-    reader.addEventListener(
-      "load",
-      () => {
-        setState((prev) => ({ ...prev, pic: reader.result }));
-      },
-      false
-    );
-    if (file) {
-      reader.readAsDataURL(file);
+    let file = e.target.files![0];
+    if (file.size > 55000) {
+      alert("Bilden är för stor");
+      setState((prev) => ({ ...prev, picDone: false, pic: "" }));
+      return;
+    } else {
+      setState((prev) => ({ ...prev, picDone: true }));
+      const reader = new FileReader();
+      setState((prev) => ({ ...prev, pic: file }));
+      reader.addEventListener(
+        "load",
+        () => {
+          setState((prev) => ({ ...prev, pic: reader.result }));
+        },
+        false
+      );
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
     }
   };
 
   const onFileUpload = () => {
-    alert("File Uploaded");
+    if (state.picDone) {
+      alert("Klart!");
+    } else if (state.picDone === false) {
+      alert("bilden är för stor, ladda upp en annan");
+      setState((prev) => ({ ...prev, pic: "" }));
+    }
   };
 
   return (
@@ -208,7 +216,7 @@ const CreateAdd = () => {
           values={{
             category: "1. Kategori",
             desc: "2. Beskriv varan",
-            infoText: "Måste vara en JPG och under 55kb storlek",
+            picInfoText: "Måste vara en JPG och under 55kb storlek",
             pic: "3. Bilder",
             price: "4. Pris",
             options: "5. Alternativ för upphämtning",
@@ -248,7 +256,7 @@ const CreateAdd = () => {
                   onChange={(e) => onFileChange(e)}
                 />
                 <span onClick={() => onFileUpload()}>Välj denna bild</span>
-                <span className="infoText">({values.infoText})</span>
+                <span className="infoText">({values.picInfoText})</span>
               </div>
               <label>{values.price}</label>
               <input
