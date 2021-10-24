@@ -94,10 +94,6 @@ const RentAdPage = () => {
     }
   };
 
-  /*
-      Priset är fel! Står alltid det priset som är en dag och inte hur mycket det är för de dagarna man ska låna prylen för
-  */
-
   return (
     <section className="rentAdContainer">
       <h1>Uthyraren har godkänt din förfrågan!</h1>
@@ -167,7 +163,7 @@ const RentAdPage = () => {
                 />
                 <span>{values.card}</span>
               </div>
-              <h1>Pris: {ad.price[0]} kr</h1>
+              <h1>Pris: {ad.totalPrice ? ad.totalPrice + 50 : 0} kr</h1>
               <div className="rentFormItemContainer">
                 <input
                   id="terms"

@@ -13,6 +13,7 @@ export interface AdState {
     pic: string;
     address?: string;
     timeperiod?: string;
+    totalPrice?: number;
   };
 }
 
@@ -29,6 +30,7 @@ const initialState: AdState = {
     pic: "",
     address: "",
     timeperiod: "",
+    totalPrice: 0,
   },
 };
 

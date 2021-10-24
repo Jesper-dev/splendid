@@ -21,6 +21,7 @@ interface DbObject {
   pic: string;
   address?: string;
   timeperiod?: string;
+  totalPrice?: number;
 }
 
 const AdPage = () => {
@@ -30,7 +31,7 @@ const AdPage = () => {
     dbObj: DbObject;
     showCalendar: boolean;
     showInfo: boolean;
-    infoPrice: number;
+    totalPrice: number;
     daysToLend: string;
   }>({
     dbObj: {
@@ -44,10 +45,11 @@ const AdPage = () => {
       category: "",
       pic: "",
       address: "",
+      totalPrice: 0,
     },
     showCalendar: false,
     showInfo: false,
-    infoPrice: 0,
+    totalPrice: 0,
     daysToLend: "",
   });
   let slug = CheckSlug();
@@ -64,9 +66,11 @@ const AdPage = () => {
 
   //Sätter vilken dag man valt i globala db objekt state (redux)
   const onClickCalendar = () => {
-    state.dbObj = { ...state.dbObj, timeperiod: value.toDateString() };
-    setState((prev) => ({ ...prev, infoPrice: state.dbObj.price[0] }));
-    dispatch(add(state.dbObj));
+    setState((prev) => ({ ...prev, totalPrice: state.dbObj.price[0] }));
+    state.dbObj = {
+      ...state.dbObj,
+      timeperiod: value.toDateString(),
+    };
     setState((prev) => ({ ...prev, showInfo: true }));
   };
 
@@ -74,23 +78,27 @@ const AdPage = () => {
     setState((prev) => ({ ...prev, daysToLend: e.target.value }));
     switch (e.target.value) {
       case "1 dag":
-        setState((prev) => ({ ...prev, infoPrice: state.dbObj.price[0] }));
+        setState((prev) => ({ ...prev, totalPrice: state.dbObj.price[0] }));
         break;
       case "2 dagar":
-        setState((prev) => ({ ...prev, infoPrice: state.dbObj.price[1] }));
+        setState((prev) => ({ ...prev, totalPrice: state.dbObj.price[1] }));
         break;
       case "5 dagar":
-        setState((prev) => ({ ...prev, infoPrice: state.dbObj.price[2] }));
+        setState((prev) => ({ ...prev, totalPrice: state.dbObj.price[2] }));
         break;
 
       default:
         break;
     }
-    console.log(e.target.value);
   };
 
   const onSubmitCalendar = () => {
-    console.log("hej");
+    state.dbObj = {
+      ...state.dbObj,
+      timeperiod: value.toDateString(),
+      totalPrice: state.totalPrice,
+    };
+    dispatch(add(state.dbObj));
   };
 
   return (
@@ -125,8 +133,8 @@ const AdPage = () => {
                   <option value="2 dagar">2 dagar</option>
                   <option value="5 dagar">5 dagar</option>
                 </select>
-                <h1>Pris: {state.infoPrice + 50} kr</h1>
-                <span>Inklusive bokningsavgift</span>
+                <h1>Pris: {state.totalPrice + 50} kr</h1>
+                <span> Priset är inklusive bokningsavgift (+50 kr)</span>
               </div>
             ) : null}
             <Link to="/rent">
