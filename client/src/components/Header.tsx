@@ -35,9 +35,7 @@ export const Header = () => {
         setState((prev) => ({ ...prev, title: newTitle }));
         break;
     }
-    if (path.includes("/ad")) {
-      setState((prev) => ({ ...prev, isTrue: true }));
-    } else if (path.includes("/pay")) {
+    if (path.includes("/ad") || path.includes("/pay")) {
       setState((prev) => ({ ...prev, isTrue: true }));
     } else {
       setState((prev) => ({ ...prev, isTrue: false }));

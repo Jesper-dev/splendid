@@ -541,3 +541,24 @@ form {
     height: 40%;
   }
 }
+
+.addCompleteContainer {
+  @include abs.flex-column;
+  justify-content: space-evenly;
+  height: 80vh;
+
+  .textContainer {
+    @include abs.flex-column;
+
+    h1 {
+      color: var.$primary-dark;
+    }
+
+    p {
+      width: 80%;
+      text-align: center;
+      @include var.ag_body;
+      color: var.$txt-color;
+    }
+  }
+}

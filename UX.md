@@ -1,5 +1,7 @@
 # UX
 
+[FIGMA](https://www.figma.com/file/jeRWvXsXyBJIRmjVgaRqo5/UX---H%C3%A5llbarhet?node-id=16%3A47)
+
 ## Respons från testet
 
 ### Var bra
@@ -19,4 +21,5 @@
 ## Skillnad från protoypen och detta projekt
 
 - **Bättre navbar**
-- **En sökruta**
+- **En searchbar**
+- **Gjort en mer enkel design**

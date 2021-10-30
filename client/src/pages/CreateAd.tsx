@@ -20,7 +20,7 @@ interface DbObj {
   timeperiod: string;
 }
 
-const CreateAdd = () => {
+const CreateAd = () => {
   const history = useHistory();
   const [state, setState] = useState<{
     category: string;
@@ -170,8 +170,8 @@ const CreateAdd = () => {
     dbFunc("https://splendidsrv.herokuapp.com/api/ads/add", "post", newDbObj);
 
     setTimeout(() => {
-      history.push("/discover");
-    }, 2000);
+      history.push("/complete");
+    }, 3000);
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -353,4 +353,4 @@ const CreateAdd = () => {
   );
 };
 
-export default CreateAdd;
+export default CreateAd;
