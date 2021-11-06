@@ -21,6 +21,7 @@ interface DbObject {
 }
 
 const CategoryPage = () => {
+  /** Redux data */
   const data = useSelector((state: RootState) => state.dbSlice.data);
   const [state, setState] = useState<{
     categoryData: Array<DbObject>;
@@ -60,7 +61,7 @@ const CategoryPage = () => {
     if (text === "") {
       setState((prev) => ({ ...prev, searchArray: [] }));
     } else {
-      const filteredArr = data.filter((obj) =>
+      const filteredArr = state.categoryData.filter((obj) =>
         obj.title.toLocaleLowerCase().includes(text.toLowerCase())
       );
       setState((prev) => ({ ...prev, searchArray: filteredArr }));
