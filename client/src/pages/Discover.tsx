@@ -34,26 +34,42 @@ const Discover = () => {
     searchArray: any[];
     dbData?: Array<DbObject>;
     loading: boolean;
+    didNotFindAny: boolean;
   }>({
     searchTerm: "",
     searchArray: [],
     loading: true,
+    didNotFindAny: false,
   });
   const categoryTexts = ["Sport och Fritid", "Verktyg"]; //Texts for the two different categories.
 
   /** Körs när vi skriver i sökruan, filtrerar dbObject arrayen och ger sökresultat */
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState((prev) => ({ ...prev, searchTerm: e.target.value }));
+    setState((prev) => ({
+      ...prev,
+      searchTerm: e.target.value,
+    }));
     const text = e.target.value;
+    let filteredArr: any[] = [];
     if (text === "") {
-      setState((prev) => ({ ...prev, searchArray: [] }));
-    } else {
-      const filteredArr = state.dbData!.filter((obj) =>
+      setState((prev) => ({ ...prev, searchArray: [], didNotFindAny: false }));
+    } else if (text !== "" && state.dbData) {
+      state.dbData.forEach((obj) =>
         obj.title.toLocaleLowerCase().includes(text.toLowerCase())
+          ? filteredArr.push(obj)
+          : null
       );
       setState((prev) => ({ ...prev, searchArray: filteredArr }));
+    } else if (state.searchArray.length === 0) {
+      console.log("hej");
+      setState((prev) => ({ ...prev, didNotFindAny: true }));
     }
   };
+
+  const clearSearchterm = () => {
+    setState((prev) => ({ ...prev, searchTerm: "" }));
+  };
+
   /** Hämtar data från databsen */
   const fetchDB = useCallback(() => {
     //http://localhost:5000/api/ads/get
@@ -81,13 +97,19 @@ const Discover = () => {
           return <CategoryCard key={i} text={item} />;
         })}
       </section>
-      <Searchbar searchTerm={state.searchTerm} onChange={onChangeSearch} />
+      <Searchbar
+        searchTerm={state.searchTerm}
+        onChange={onChangeSearch}
+        clearSearchterm={clearSearchterm}
+      />
       <section className="recomendedContainer">
         <h3>Rekommenderade produkter</h3>
         {/* Mappar ut alla ads/annonser från datan vi hämta från databasen */}
         {state.loading ? (
           <p>Laddar...</p>
-        ) : state.searchArray.length === 0 && state.dbData ? (
+        ) : state.didNotFindAny !== true &&
+          state.dbData &&
+          state.searchArray.length === 0 ? (
           state.dbData.map((item, i) => {
             return (
               <AdCard
@@ -100,6 +122,8 @@ const Discover = () => {
               />
             );
           })
+        ) : state.searchArray.length === 0 ? (
+          <p>Hittar inga annonser, testa att söka igen</p>
         ) : (
           state.searchArray.map((item, i) => {
             return (

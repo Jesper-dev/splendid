@@ -68,10 +68,18 @@ const CategoryPage = () => {
     }
   };
 
+  const clearSearchterm = () => {
+    setState((prev) => ({ ...prev, searchTerm: "" }));
+  };
+
   return (
     <section className="categoryPageContainer">
       <i className="fas fa-chevron-left" onClick={() => history.goBack()}></i>
-      <Searchbar searchTerm={state.searchTerm} onChange={onChangeSearch} />
+      <Searchbar
+        searchTerm={state.searchTerm}
+        onChange={onChangeSearch}
+        clearSearchterm={clearSearchterm}
+      />
       {state.done ? (
         state.searchArray.length === 0 ? (
           state.categoryData.map((item, i) => {
