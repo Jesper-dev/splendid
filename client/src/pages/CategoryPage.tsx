@@ -24,9 +24,10 @@ const CategoryPage = () => {
   const data = useSelector((state: RootState) => state.dbSlice.data);
   const [state, setState] = useState<{
     categoryData: Array<DbObject>;
-    done: boolean;
     searchTerm: string;
-    searchArray: any[];
+    filteredList: any[];
+    loading: boolean;
+    didNotFindAny: boolean;
   }>({
     categoryData: [
       {
@@ -41,34 +42,61 @@ const CategoryPage = () => {
         pic: "",
       },
     ],
-    done: false,
     searchTerm: "",
-    searchArray: [],
+    filteredList: [],
+    loading: true,
+    didNotFindAny: false,
   });
   let slug = CheckSlug();
   const history = useHistory();
 
   useEffect(() => {
     const newArr = data.filter((item: DbObject) => item.category === slug);
-    setState((prev) => ({ ...prev, categoryData: newArr, done: true }));
+    setState((prev) => ({ ...prev, categoryData: newArr, loading: false }));
   }, [slug, data]);
 
   /** Körs när vi skriver i sökruan, filtrerar data (redux) arrayen och ger sökresultatet */
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState((prev) => ({ ...prev, searchTerm: e.target.value }));
     const text = e.target.value;
-    if (text === "") {
-      setState((prev) => ({ ...prev, searchArray: [] }));
-    } else {
-      const filteredArr = state.categoryData.filter((obj) =>
-        obj.title.toLocaleLowerCase().includes(text.toLowerCase())
-      );
-      setState((prev) => ({ ...prev, searchArray: filteredArr }));
+    setState((prev) => ({
+      ...prev,
+      searchTerm: text,
+      filteredList: [],
+      didNotFindAny: false,
+    }));
+    const searchList = state.categoryData?.filter((item) => {
+      return item.title
+        .toLowerCase()
+        .trim()
+        .includes(text.toLowerCase().trim());
+    });
+    //Det finns inga annonser som matchar söktermen
+    if (searchList?.length === 0) {
+      setState((prev) => ({
+        ...prev,
+        didNotFindAny: true,
+        filteredList: [],
+      }));
+    } else if (text === "") {
+      //Man raderar all text och får tillbaka alla annonser som fanns innan
+      setState((prev) => ({ ...prev, filteredList: [], didNotFindAny: false }));
+    } else if (searchList && searchList?.length > 0) {
+      //Vi har hittar en annons som matchar söktermen
+      setState((prev) => ({
+        ...prev,
+        filteredList: searchList,
+        didNotFindAny: false,
+      }));
     }
   };
 
   const clearSearchterm = () => {
-    setState((prev) => ({ ...prev, searchTerm: "" }));
+    setState((prev) => ({
+      ...prev,
+      searchTerm: "",
+      didNotFindAny: false,
+      filteredList: [],
+    }));
   };
 
   return (
@@ -79,36 +107,39 @@ const CategoryPage = () => {
         onChange={onChangeSearch}
         clearSearchterm={clearSearchterm}
       />
-      {state.done ? (
-        state.searchArray.length === 0 ? (
-          state.categoryData.map((item, i) => {
-            return (
-              <AdCard
-                key={i}
-                _id={item._id}
-                title={item.title}
-                price={item.price[0] ? item.price[0].toString() : "0"}
-                adress={item.adress}
-                pic={item.pic ? item.pic : ""}
-              />
-            );
-          })
-        ) : (
-          state.searchArray.map((item, i) => {
-            return (
-              <AdCard
-                key={i}
-                _id={item._id}
-                title={item.title}
-                price={item.price[0]}
-                adress={item.adress}
-                pic={item.pic ? item.pic : ""}
-              />
-            );
-          })
-        )
+      {/* Mappar ut alla ads/annonser från datan vi hämta från databasen */}
+      {state.loading ? (
+        <p>Laddar...</p>
+      ) : state.didNotFindAny !== true &&
+        state.categoryData &&
+        state.filteredList.length === 0 ? (
+        state.categoryData.map((item, i) => {
+          return (
+            <AdCard
+              key={i}
+              _id={item._id}
+              title={item.title}
+              price={item.price[0] ? item.price[0].toString() : "0"}
+              adress={item.adress}
+              pic={item.pic ? item.pic : ""}
+            />
+          );
+        })
+      ) : state.didNotFindAny ? (
+        <p>Hittar inga annonser, testa att söka igen</p>
       ) : (
-        <p>Loading...</p>
+        state.filteredList.map((item, i) => {
+          return (
+            <AdCard
+              key={i}
+              _id={item._id}
+              title={item.title}
+              price={item.price[0]}
+              adress={item.adress}
+              pic={item.pic ? item.pic : ""}
+            />
+          );
+        })
       )}
     </section>
   );

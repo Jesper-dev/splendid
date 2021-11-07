@@ -30,13 +30,13 @@ const Discover = () => {
   const dispatch = useDispatch();
   const [state, setState] = useState<{
     searchTerm: string;
-    searchArray: any[];
+    filteredList: any[];
     dbData?: Array<DbObject>;
     loading: boolean;
     didNotFindAny: boolean;
   }>({
     searchTerm: "",
-    searchArray: [],
+    filteredList: [],
     loading: true,
     didNotFindAny: false,
   });
@@ -44,29 +44,38 @@ const Discover = () => {
 
   /** Körs när vi skriver i sökruan, filtrerar dbObject arrayen och ger sökresultat */
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState((prev) => ({
-      ...prev,
-      searchTerm: e.target.value,
-    }));
     const text = e.target.value;
-    let filteredArr: any[] = [];
-    if (text === "") {
-      setState((prev) => ({ ...prev, searchArray: [], didNotFindAny: false }));
-    } else if (text !== "" && state.dbData) {
-      state.dbData.forEach((obj) =>
-        obj.title.toLocaleLowerCase().includes(text.toLowerCase())
-          ? filteredArr.push(obj)
-          : null
-      );
-      setState((prev) => ({ ...prev, searchArray: filteredArr }));
-    } else if (state.searchArray.length === 0) {
-      console.log("hej");
-      setState((prev) => ({ ...prev, didNotFindAny: true }));
+    setState((prev) => ({ ...prev, searchTerm: text, filteredList: [] }));
+    const searchList = state.dbData?.filter((item) => {
+      return item.title.toLowerCase().includes(text.toLowerCase());
+    });
+    //Det finns inga annonser som matchar söktermen
+    if (searchList?.length === 0) {
+      setState((prev) => ({
+        ...prev,
+        didNotFindAny: true,
+        filteredList: [],
+      }));
+    } else if (text === "") {
+      //Man raderar all text och får tillbaka alla annonser som fanns innan
+      setState((prev) => ({ ...prev, filteredList: [], didNotFindAny: false }));
+    } else if (searchList && searchList?.length > 0) {
+      //Vi har hittar en annons som matchar söktermen
+      setState((prev) => ({
+        ...prev,
+        filteredList: searchList,
+        didNotFindAny: false,
+      }));
     }
   };
 
   const clearSearchterm = () => {
-    setState((prev) => ({ ...prev, searchTerm: "" }));
+    setState((prev) => ({
+      ...prev,
+      searchTerm: "",
+      didNotFindAny: false,
+      filteredList: [],
+    }));
   };
 
   /** Hämtar data från databsen */
@@ -108,7 +117,7 @@ const Discover = () => {
           <p>Laddar...</p>
         ) : state.didNotFindAny !== true &&
           state.dbData &&
-          state.searchArray.length === 0 ? (
+          state.filteredList.length === 0 ? (
           state.dbData.map((item, i) => {
             return (
               <AdCard
@@ -121,10 +130,10 @@ const Discover = () => {
               />
             );
           })
-        ) : state.searchArray.length === 0 ? (
+        ) : state.didNotFindAny ? (
           <p>Hittar inga annonser, testa att söka igen</p>
         ) : (
-          state.searchArray.map((item, i) => {
+          state.filteredList.map((item, i) => {
             return (
               <AdCard
                 key={i}
