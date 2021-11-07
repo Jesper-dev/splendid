@@ -11,12 +11,11 @@ interface DbObject {
   title: string;
   price: number[];
   desc: string;
-  place: string;
   name: string;
   date: string;
   category: string;
   pic: string;
-  address?: string;
+  adress: string;
   timeperiod?: string;
 }
 
@@ -35,7 +34,7 @@ const CategoryPage = () => {
         title: "",
         price: [],
         desc: "",
-        place: "",
+        adress: "",
         name: "",
         date: "",
         category: "",
@@ -89,7 +88,7 @@ const CategoryPage = () => {
                 _id={item._id}
                 title={item.title}
                 price={item.price[0] ? item.price[0].toString() : "0"}
-                place={item.place}
+                adress={item.adress}
                 pic={item.pic ? item.pic : ""}
               />
             );
@@ -102,7 +101,7 @@ const CategoryPage = () => {
                 _id={item._id}
                 title={item.title}
                 price={item.price[0]}
-                place={item.place}
+                adress={item.adress}
                 pic={item.pic ? item.pic : ""}
               />
             );

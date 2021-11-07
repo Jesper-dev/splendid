@@ -14,12 +14,11 @@ interface DbObject {
   title: string;
   price: number[];
   desc: string;
-  place: string;
   name: string;
   date: string;
   category: string;
   pic: string;
-  address?: string;
+  adress: string;
   timeperiod?: string;
   totalPrice?: number;
 }
@@ -39,12 +38,11 @@ const AdPage = () => {
       title: "",
       price: [],
       desc: "",
-      place: "",
       name: "",
       date: "",
       category: "",
       pic: "",
-      address: "",
+      adress: "",
       totalPrice: 0,
     },
     showCalendar: false,
@@ -152,7 +150,7 @@ const AdPage = () => {
               <h1>{state.dbObj.title}</h1>
               <div className="container1">
                 <p>{state.dbObj.price[0]} kr/dag</p>
-                <p>{state.dbObj.address}</p>
+                <p>{state.dbObj.adress}</p>
               </div>
               <p>{state.dbObj.desc}</p>
               <h4>Priser</h4>

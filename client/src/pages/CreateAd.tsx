@@ -15,7 +15,7 @@ interface DbObj {
   adress?: string;
   delivery: boolean;
   terms: string;
-  value: string;
+  value: number;
   date: number;
   timeperiod: string;
 }
@@ -34,7 +34,7 @@ const CreateAd = () => {
     adress: string;
     delivery: boolean;
     terms: string;
-    value: string;
+    value: number;
     pic: any;
     timeperiod: string;
     picDone: boolean;
@@ -50,7 +50,7 @@ const CreateAd = () => {
     adress: "",
     delivery: false,
     terms: "",
-    value: "",
+    value: 0,
     pic: "",
     timeperiod: "",
     picDone: false,
@@ -109,7 +109,8 @@ const CreateAd = () => {
         break;
 
       case "value":
-        setState((prev) => ({ ...prev, value: e.target.value }));
+        const value = parseInt(e.target.value);
+        setState((prev) => ({ ...prev, value: value }));
         break;
 
       default:
@@ -135,7 +136,7 @@ const CreateAd = () => {
       return false;
     } else if (state.terms === "") {
       return false;
-    } else if (state.value === "") {
+    } else if (!state.value) {
       return false;
     } else {
       return true;
@@ -168,10 +169,7 @@ const CreateAd = () => {
     //https://splendidsrv.herokuapp.com/api/ads/add
     //http://localhost:5000/api/ads/add
     dbFunc("https://splendidsrv.herokuapp.com/api/ads/add", "post", newDbObj);
-
-    setTimeout(() => {
-      history.push("/complete");
-    }, 3000);
+    history.push("/complete");
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -255,7 +253,9 @@ const CreateAd = () => {
                   accept="image/*"
                   onChange={(e) => onFileChange(e)}
                 />
-                <span onClick={() => onFileUpload()}>Välj denna bild</span>
+                <span className="chooseImgBtn" onClick={() => onFileUpload()}>
+                  Välj denna bild
+                </span>
                 <span className="infoText">({values.picInfoText})</span>
               </div>
               <label>{values.price}</label>
@@ -338,7 +338,9 @@ const CreateAd = () => {
               <label>{values.value}</label>
               <input
                 placeholder="Värde"
-                type="text"
+                type="number"
+                min={1}
+                max={100000}
                 id="value"
                 value={state.value}
                 onChange={(e) => onChange(e)}

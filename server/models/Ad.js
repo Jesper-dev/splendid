@@ -39,7 +39,7 @@ const AdSchema = new Schema({
     required: true,
   },
   value: {
-    type: String,
+    type: Number,
     required: true,
   },
   pic: {

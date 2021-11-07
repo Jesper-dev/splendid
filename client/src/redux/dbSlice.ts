@@ -7,12 +7,11 @@ export interface dbState {
       title: string;
       price: number[];
       desc: string;
-      place: string;
       name: string;
       date: string;
       category: string;
       pic: string;
-      address?: string;
+      adress: string;
       timeperiod?: string;
     }
   ];
@@ -25,12 +24,11 @@ const initialState: dbState = {
       title: "",
       price: [],
       desc: "",
-      place: "",
       name: "",
       date: "",
       category: "",
       pic: "",
-      address: "",
+      adress: "",
     },
   ],
 };
