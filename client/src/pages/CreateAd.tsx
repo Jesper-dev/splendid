@@ -131,7 +131,7 @@ const CreateAd = () => {
       return false;
     } else if (state.pickup === false && state.delivery === false) {
       return false;
-    } else if (state.pickup === true && state.adress === "") {
+    } else if (state.adress === "") {
       return false;
     } else if (state.terms === "") {
       return false;
@@ -157,7 +157,7 @@ const CreateAd = () => {
       desc: state.desc,
       pic: state.pic,
       pickup: state.pickup,
-      adress: state.pickup ? state.adress : "",
+      adress: state.adress,
       delivery: state.delivery,
       price: arr,
       terms: state.terms,
@@ -287,7 +287,15 @@ const CreateAd = () => {
                 onChange={(e) => onChange(e)}
               />
               <label>{values.options}</label>
+
               <div className="optionsContainer">
+                <input
+                  placeholder="Adress"
+                  type="text"
+                  id="adress"
+                  value={state.adress}
+                  onChange={(e) => onChange(e)}
+                />
                 <div>
                   <input
                     type="checkbox"
@@ -296,18 +304,6 @@ const CreateAd = () => {
                     onChange={(e) => onChange(e)}
                   ></input>
                   <span>Upphämtning</span>
-                  {state.pickup ? (
-                    <div className="adressContainer">
-                      {" "}
-                      <label> Adress: </label>{" "}
-                      <input
-                        type="text"
-                        id="adress"
-                        value={state.adress}
-                        onChange={(e) => onChange(e)}
-                      />
-                    </div>
-                  ) : null}
                 </div>
                 <div>
                   <input
@@ -322,7 +318,13 @@ const CreateAd = () => {
                   Splendid erbjuder användare ett miljövänligt
                   leveransalternativ för att göra lånadet mer tillgänligt för de
                   som saknar möjligheter för upphämtning. Se hur vi arbetar
-                  genom att följa länken.
+                  genom att följa länken.{" "}
+                  <span
+                    className="linkTag"
+                    onClick={() => history.push("/hyresvillkor")}
+                  >
+                    Läs om vår leveransprocess
+                  </span>
                 </p>
               </div>
               <label>{values.terms}</label>
