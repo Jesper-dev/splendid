@@ -505,13 +505,13 @@ nav {
 
 .mainBtn {
   @include abs.for-size(everything) {
-    width: 20%;
+    width: 50%;
     &:hover {
       cursor: pointer;
     }
   }
 
   @include abs.for-size(tablet) {
-    width: 30%;
+    width: 60%;
   }
 }
