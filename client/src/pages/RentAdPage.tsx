@@ -1,3 +1,4 @@
+import { useEffect, useCallback } from "react";
 import { Form } from "../components/Form";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
@@ -12,16 +13,27 @@ const RentAdPage = () => {
     swish: boolean;
     card: boolean;
     terms: boolean;
+    modifiedPrice: number;
   }>({
     pickup: false,
     delivery: false,
     swish: false,
     card: false,
     terms: false,
+    modifiedPrice: 0,
   });
 
   const ad = useSelector((state: RootState) => state.ad.AdObj);
   const history = useHistory();
+
+  //Ska lägga till +50 kr när man väljer boka
+  const changeTotalPrice = () => {
+    if (state.delivery && ad.totalPrice) {
+      const newPrice = ad.totalPrice + 50;
+      setState((prev) => ({ ...prev, modifiedPrice: newPrice }));
+    }
+  };
+
   const onCheckboxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.id) {
       case "pickup":
@@ -33,11 +45,13 @@ const RentAdPage = () => {
         break;
 
       case "delivery":
+        changeTotalPrice();
         setState((prev) => ({
           ...prev,
           delivery: !state.delivery,
           pickup: false,
         }));
+
         break;
 
       case "swish":
@@ -93,6 +107,27 @@ const RentAdPage = () => {
       else if (state.card) history.push("/pay/card");
     }
   };
+
+  /** Sätter det totala priset + 50 kr för leverans.
+   * Denna sitter i en useCallback så att det inte blir
+   * en infinite loop när vi kör den i useEffecten
+   */
+  const setModifiedPriceOnLoad = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      modifiedPrice: ad.totalPrice ? ad.totalPrice + 50 : 0,
+    }));
+  }, [ad.totalPrice]);
+
+  useEffect(() => {
+    setModifiedPriceOnLoad();
+    return () => {
+      setState((prev) => ({
+        ...prev,
+        modifiedPrice: 0,
+      }));
+    };
+  }, [ad.totalPrice, setModifiedPriceOnLoad]);
 
   return (
     <section className="rentAdContainer">
@@ -163,7 +198,9 @@ const RentAdPage = () => {
                 />
                 <span>{values.card}</span>
               </div>
-              <h1>Pris: {ad.totalPrice ? ad.totalPrice + 50 : 0} kr</h1>
+              <h1>
+                Pris: {state.delivery ? state.modifiedPrice : ad.totalPrice} kr
+              </h1>
               <div className="rentFormItemContainer">
                 <input
                   id="terms"

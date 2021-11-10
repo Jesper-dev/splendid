@@ -131,8 +131,8 @@ const AdPage = () => {
                   <option value="2 dagar">2 dagar</option>
                   <option value="5 dagar">5 dagar</option>
                 </select>
-                <h1>Pris: {state.totalPrice + 50} kr</h1>
-                <span> Priset är inklusive bokningsavgift (+50 kr)</span>
+                <h1>Pris: {state.totalPrice} kr</h1>
+                <span> bokningsavgift 50 kr</span>
               </div>
             ) : null}
             <Link to="/rent">
