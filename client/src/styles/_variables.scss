@@ -13,33 +13,43 @@ $primary-dark: #235347;
 $peach-primary: #f88472;
 $text-color-green: #08947e;
 $txt-color: #444444;
+$rent-text: #f88472;
 
 @mixin body_small {
   font-size: 12px;
   line-height: 22px;
-  font-family: "Poppins", sans-serif;
+  font-family: $ad-card-font;
 }
 
 @mixin ag_body {
   font-size: 16px;
   line-height: 24px;
-  font-family: "Poppins", sans-serif;
+  font-family: $ad-card-font;
 }
 
 @mixin ag_body_bold {
   font-size: 16px;
   line-height: 36px;
-  font-family: "Poppins", sans-serif;
+  font-family: $ad-card-font;
 }
 
 @mixin ag_body_semibold {
   font-size: 16px;
   line-height: 36px;
   font-weight: 600;
-  font-family: "Poppins", sans-serif;
+  font-family: $ad-card-font;
 }
 
 @mixin ag_body2 {
   font-size: 16px;
   line-height: 30px;
+}
+
+@mixin rent_text {
+  font-size: 20px;
+  line-height: 36px;
+  font-style: italic;
+  font-weight: 700;
+  color: $rent-text;
+  font-family: $ad-card-font;
 }

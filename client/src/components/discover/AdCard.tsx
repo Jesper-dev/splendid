@@ -19,7 +19,9 @@ export const AdCard = ({ _id, title, price, adress, pic }: Props) => {
       <div className="picContainer">
         <img src={pic} alt="" />
       </div>
-      <Link to={`/ad/${_id}`}>Hyr här!</Link>
+      <Link to={`/ad/${_id}`} className="adText">
+        Hyr här!
+      </Link>
     </div>
   );
 };
