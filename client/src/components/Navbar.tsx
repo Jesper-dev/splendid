@@ -23,7 +23,11 @@ export const Navbar = () => {
         setIsTrue(false);
         break;
     }
-    if (path.includes("/ad") || path.includes("/complete")) {
+    if (
+      path.includes("/ad") ||
+      path.includes("/complete") ||
+      path.includes("/hyresvillkor")
+    ) {
       setIsTrue(true);
     } else if (path.includes("/pay")) {
       setIsTrue(true);
