@@ -1,6 +1,7 @@
 # UX
 
 [FIGMA](https://www.figma.com/file/jeRWvXsXyBJIRmjVgaRqo5/UX---H%C3%A5llbarhet?node-id=16%3A47)
+[Docs](https://docs.google.com/document/d/1_eYZeH841ccdL2JXpq9sIC5XADp3qtj9hZvLC14i3_4/edit?usp=sharing)
 
 ## Respons från testet
 

@@ -8,7 +8,7 @@
 
 ## _layout.scss
 
-**This is where header and nav is**
+**This is where the header and nav is**
 
 ## _responsive.scss
 
@@ -20,7 +20,7 @@
 
 ## global.scss
 
-**This is where body and main is**
+**This is where body and main is, all global scss**
 
 ## main.scss
 
