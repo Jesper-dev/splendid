@@ -97,7 +97,6 @@ const CreateAd = () => {
 
       case "adress":
         setState((prev) => ({ ...prev, adress: e.target.value }));
-        console.log(state.adress);
         break;
 
       case "delivery":
@@ -345,10 +344,7 @@ const CreateAd = () => {
                 value={state.value}
                 onChange={(e) => onChange(e)}
               />
-              <MainBtn
-                text={"publicera annons"}
-                onClickFunc={() => console.log("Hej")}
-              />
+              <MainBtn text={"publicera annons"} />
             </>
           )}
         </Form>
